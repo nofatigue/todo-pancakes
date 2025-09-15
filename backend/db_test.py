@@ -5,20 +5,13 @@ from typing import Optional
 from sqlalchemy import ForeignKey
 from sqlalchemy import String
 from sqlalchemy.engine.result import ScalarResult
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy.orm import Mapped
-from sqlalchemy.orm import mapped_column
+
+
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm import Session
-
+from model import *
 #what is mapped_column?
-class Base(DeclarativeBase):
-    pass
 
-class TodoItem(Base):
-    __tablename__ = "items"
-    id: Mapped[int] = mapped_column(primary_key=True)
-    text: Mapped[str]
 
 def orm_to_dict(orm_obj: ScalarResult) -> dict:
     return {k: v for k, v in orm_obj.__dict__.items() if not k.startswith('_')}
@@ -57,9 +50,23 @@ def print_tasks():
     else:
         print("There are no tasks currently! You are free!")
 
+def delete_tasks(ids: list):
+    with Session(engine) as session:
+        for id in ids:
+            #TODO: improve efficiency
+            item = session.get(TodoItem, id)
+            session.delete(item)
+
+        session.commit()
+
 # create postgresql db in memory
-engine = sqlalchemy.create_engine("sqlite+pysqlite:///:memory:", echo=True)
+engine = sqlalchemy.create_engine("postgresql+psycopg://postgres:Password1@localhost:5444", echo=True)
 Base.metadata.create_all(engine)
 print_tasks()
 add_some_tasks()
 print_tasks()
+
+tasks: list[dict] = get_tasks()
+tasks_ids: list[int] = [task['id'] for task in tasks]
+
+delete_tasks(tasks_ids)

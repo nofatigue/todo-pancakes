@@ -4,6 +4,7 @@ from litestar.params import Dependency
 from typing_extensions import Any, AsyncGenerator
 from litestar import Litestar, get
 from litestar.di import  Provide
+from backend.controllers.item import ItemController
 from backend.db.config import engine, Base, get_db_session
 
 @asynccontextmanager
@@ -21,7 +22,7 @@ async def index(db_session: Any = Dependency()) -> str:
     return "Hello, world!"
 
 app = Litestar(
-    route_handlers=[index],
+    route_handlers=[index, ItemController],
     dependencies={'db_session' : Provide(get_db_session)},
     lifespan=[db_lifespan],
     )

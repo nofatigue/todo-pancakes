@@ -1,32 +1,19 @@
-import typing
-
-import datetime
-
 from contextlib import asynccontextmanager
 
+from sqlalchemy.ext.asyncio import AsyncSession
 import strawberry
 from litestar.params import Dependency
-from typing_extensions import Any, AsyncGenerator
+
+from collections.abc import AsyncGenerator
 from litestar import Litestar, get
 from litestar.di import  Provide
 from backend.db import engine, Base, get_db_session
 from strawberry.litestar import make_graphql_controller
 
-from litestar import Controller, post, get
-from litestar.params import Dependency
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.sql.schema import _InsertSentinelColumnDefault
-from sqlalchemy import ScalarResult
-import sqlalchemy
-
-from typing import List
-
-from backend.db import orm_to_dict
-from backend.db import TodoItemModel
 
 from backend.schema import Query, Mutation
 
-def custom_context_getter(db_session: Any=Dependency()):
+def custom_context_getter(db_session: AsyncSession = Dependency()):
     return {'db_session': db_session}
 
 @asynccontextmanager
@@ -39,7 +26,7 @@ async def db_lifespan(app) -> AsyncGenerator[None, None]:
     await engine.dispose()
 
 @get("/")
-async def index(db_session: Any = Dependency()) -> str:
+async def index() -> str:
     return "Hello, world!"
 
 schema = strawberry.Schema(query=Query, mutation=Mutation)

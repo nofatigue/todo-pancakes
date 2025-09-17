@@ -4,10 +4,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from typing import List
 import sqlalchemy
 from sqlalchemy import ScalarResult
-import typing
 
 from backend.db import orm_to_dict
-import datetime
+
 
 from backend.db import TodoItemModel
 

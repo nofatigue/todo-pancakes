@@ -8,4 +8,5 @@ dependencies = [
     "litestar[standard]>=2.17.0",
     "psycopg>=3.2.10",
     "sqlalchemy>=2.0.43",
+    "strawberry-graphql[debug-server]>=0.282.0",
 ]

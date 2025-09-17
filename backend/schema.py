@@ -3,10 +3,13 @@ import strawberry
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing import List
 import sqlalchemy
-from backend.models.item import TodoItemModel
 from sqlalchemy import ScalarResult
 import typing
-from backend.db.shared import orm_to_dict
+
+from backend.db import orm_to_dict
+import datetime
+
+from backend.db import TodoItemModel
 
 @strawberry.type
 class TodoItem:
@@ -15,26 +18,6 @@ class TodoItem:
     completed: bool
     created_at: datetime.datetime
 
-async def get_tasks(info: strawberry.Info) -> List[TodoItem]:
-    #, info: strawberry.Info[dict, None]
-    db_session: AsyncSession = info.context["db_session"]
-
-    tasks: List[TodoItem] = []
-    tasks_rows = sqlalchemy.select(TodoItemModel)
-
-    tasks_orm: ScalarResult = await db_session.scalars(tasks_rows)
-
-    for task in tasks_orm:
-        task_dict = orm_to_dict(task)
-        tasks.append(TodoItem(id=task_dict['id'],
-            text=task_dict['text'],
-            completed=task_dict['completed'],
-            created_at=task_dict['created_at']  )
-        )
-
-    #tasks = [TodoItem(text="1"), TodoItem(text="2")]
-
-    return tasks
 
 @strawberry.input
 class AddTaskInput:
@@ -42,7 +25,27 @@ class AddTaskInput:
 
 @strawberry.type
 class Query:
-    tasks: typing.List[TodoItem] = strawberry.field(resolver=get_tasks)
+    #tasks: typing.List[TodoItem] = strawberry.field(resolver=get_tasks)
+    @strawberry.field
+    async def tasks(info: strawberry.Info) -> List[TodoItem]:
+        #, info: strawberry.Info[dict, None]
+        db_session: AsyncSession = info.context["db_session"]
+
+        tasks: List[TodoItem] = []
+        tasks_rows = sqlalchemy.select(TodoItemModel)
+
+        tasks_orm: ScalarResult = await db_session.scalars(tasks_rows)
+
+        for task in tasks_orm:
+            task_dict = orm_to_dict(task)
+            tasks.append(TodoItem(id=task_dict['id'],
+                text=task_dict['text'],
+                completed=task_dict['completed'],
+                created_at=task_dict['created_at']  )
+            )
+
+        #tasks = [TodoItem(text="1"), TodoItem(text="2")]
+        return tasks
 
 @strawberry.type
 class Mutation:

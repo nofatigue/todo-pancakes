@@ -45,34 +45,134 @@ class MyAppState extends ChangeNotifier {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  var currentIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    Widget page;
+    switch (currentIndex) {
+      case 0:
+      page = GeneratorPage();
+      case 1:
+      page = FavoritesPage();
+      default:
+      throw UnimplementedError("No widget for $currentIndex");
+    }
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Scaffold(
+          body: Row(
+            children: [
+              SafeArea(
+                child: NavigationRail(
+                  extended: constraints.maxWidth >= 600,
+                  destinations: [
+                    NavigationRailDestination(
+                      icon: Icon(Icons.home),
+                      label: Text('Home'),
+                    ),
+                    NavigationRailDestination(
+                      icon: Icon(Icons.favorite),
+                      label: Text('Favorites'),
+                    ),
+                  ],
+                  selectedIndex: currentIndex,
+                  onDestinationSelected: (value) {
+                    setState(() {
+                      currentIndex = value;
+                    });
+                    
+                  },
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                  child: page,
+                ),
+              ),
+            ],
+          ),
+        );
+      }
+    );
+  }
+}
+
+class GeneratorPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
     var pair = appState.current;
 
-    IconData likeButtonIcon;
-    if (appState.favorites.contains(appState.current)) {
-      likeButtonIcon = Icons.favorite;
-    }
-    else {
-      likeButtonIcon = Icons.favorite_border;
+    IconData icon;
+    if (appState.favorites.contains(pair)) {
+      icon = Icons.favorite;
+    } else {
+      icon = Icons.favorite_border;
     }
 
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
           NameCard(pair: pair),
-          SizedBox(height: 10,),
-          ButtonPanel(appState: appState, likeButtonIcon: likeButtonIcon)
-          ],
-        ),
+          SizedBox(height: 10),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ElevatedButton.icon(
+                onPressed: () {
+                  appState.toggleFavorite();
+                },
+                icon: Icon(icon),
+                label: Text('Like'),
+              ),
+              SizedBox(width: 10),
+              ElevatedButton(
+                onPressed: () {
+                  appState.getNext();
+                },
+                child: Text('Next'),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
 }
+
+
+class FavoritesPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    var appState = context.watch<MyAppState>();
+    var pair = appState.current;
+
+    var favoritesWidgets = <Widget> [];
+    
+      
+    for (var favoriteItem in appState.favorites) {
+      favoritesWidgets.add(Card(child: Text(favoriteItem.asLowerCase),));
+    };
+
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: favoritesWidgets
+      ),
+    );
+  }
+}
+
 
 class ButtonPanel extends StatelessWidget {
   const ButtonPanel({

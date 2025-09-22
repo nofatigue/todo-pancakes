@@ -1,0 +1,21 @@
+type TodoItem {
+    id: int!
+    text: String!
+    completed: boolean!
+    created_at: timestamp!
+}
+
+type Query {
+    getTodos(): [TodoItem!]!
+    
+}
+
+type Mutation {
+    addTodo(text: String!): TodoItem!
+    toggleTodo(id: int!): TodoItem!
+
+}
+
+type Subscription {
+    todoUpdates(): [TodoItem!]!
+}

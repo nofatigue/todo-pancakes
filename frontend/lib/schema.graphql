@@ -2,18 +2,9 @@ type TodoItem {
     id: Int!
     text: String!
     completed: Boolean!
-    created_at: DateTime!
+    createdAt: DateTime!
 }
 
-type FullItem {
-    id
-    text
-    completed
-    created_at
-}
-
-query getTasks() {
-    tasks() {
-        ..FullItem
-    }
+type Query {
+    tasks: [TodoItem!]!
 }

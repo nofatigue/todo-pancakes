@@ -223,7 +223,7 @@ packages:
     source: hosted
     version: "0.7.0"
   ferry_generator:
-    dependency: "direct main"
+    dependency: "direct dev"
     description:
       name: ferry_generator
       sha256: b1a61148003ec16a3f169758f1096919609edfb40310f9af6790fb3606430253
@@ -305,7 +305,7 @@ packages:
     source: hosted
     version: "0.13.1"
   gql_code_builder_serializers:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: gql_code_builder_serializers
       sha256: ad8554da95de9f218c744518fcb55b6f94ffde4659aa50479eaae05855645877
@@ -320,6 +320,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.1-alpha+1699813812660"
+  gql_http_link:
+    dependency: "direct main"
+    description:
+      name: gql_http_link
+      sha256: "07635e85a4f313836904961904417fd27844fe8f68f77b410a4e6b81d8e9202e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.0"
   gql_link:
     dependency: transitive
     description:

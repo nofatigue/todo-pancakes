@@ -18,6 +18,8 @@ dependencies:
   ferry: ^0.16.1+2
   
   build_runner: ^2.5.4
+  provider: ^6.1.5+1
+  ferry_flutter: ^0.9.1+1
 
 dev_dependencies:
   flutter_test:

@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/backend.dart';
 
 import 'package:frontend/graphql/__generated__/getTasks.data.gql.dart';
 import 'package:frontend/graphql/__generated__/getTasks.req.gql.dart';
 import 'package:frontend/graphql/__generated__/getTasks.var.gql.dart';
-import 'package:provider/provider.dart';
+
 import 'package:ferry_flutter/ferry_flutter.dart';
+
 import 'package:built_collection/built_collection.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -17,15 +19,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => MyAppState(),
-      child: MaterialApp(
-        title: 'Namer App',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
-        ),
-        home: MyHomePage(),
+    return MaterialApp(
+      title: 'Namer App',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
       ),
+      home: MyHomePage(),
     );
   }
 }
@@ -95,8 +94,6 @@ class _MyHomePageState extends State<MyHomePage> {
 class AddPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
-
     final icon = Icons.favorite;
     return Center(
       child: Column(
@@ -177,30 +174,46 @@ class TodoItemCard extends StatelessWidget {
   }
 }
 
-class TodoListPage extends StatelessWidget {
-  //TODO: Use Riverpod for dependency
+final tasksProvider = FutureProvider<BuiltList<GgetTasksData_tasks>>((
+  ref,
+) async {
+  final tasksReq = GgetTasksReq((b) => b);
+
+  return (await graphClient.request(tasksReq).first).data!.tasks;
+});
+
+class TodoListPage extends ConsumerWidget {
   final client = graphClient;
 
   TodoListPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final futureTaskList = ref.watch(tasksProvider);
+
     return Scaffold(
       appBar: AppBar(title: const Text('All Tasks')),
-      body: Operation<GgetTasksData, GgetTasksVars>(
-        client: client,
-        operationRequest: GgetTasksReq((b) => b),
-        builder: (context, response, error) {
-          if (response!.loading) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          final tasks = response.data?.tasks.toBuiltList() ?? BuiltList();
 
-          return ListView.builder(
-            itemCount: tasks.length,
-            itemBuilder: (context, index) => TodoItemCard(task: tasks[index]),
-          );
-        },
+      body: Column(
+        children: [
+          Expanded(
+            child: switch (futureTaskList) {
+              AsyncValue(:final value?, hasValue: true) => ListView.builder(
+                itemCount: value.length,
+                itemBuilder:
+                    (context, index) => TodoItemCard(task: value[index]),
+              ),
+              AsyncValue(error: != null) => const Text("Couldn't fetch tasks!"),
+              AsyncValue() => const CircularProgressIndicator(),
+            },
+          ),
+          ElevatedButton(
+            onPressed: () {
+              //ref.invalidate(tasksProvider);
+            },
+            child: Text('Add'),
+          ),
+        ],
       ),
     );
   }

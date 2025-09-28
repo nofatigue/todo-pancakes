@@ -1,0 +1,14 @@
+type TodoItem {
+    id: Int!
+    text: String!
+    completed: Boolean!
+}
+
+enum Foo{
+    BAR,
+    BAZ
+}
+
+type Query {
+    tasks: [TodoItem!]!
+}

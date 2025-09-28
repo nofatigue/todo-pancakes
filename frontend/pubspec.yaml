@@ -1,0 +1,37 @@
+name: frontend
+description: "A new Flutter project."
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.7.2
+dependencies:
+  flutter:
+    sdk: flutter
+
+  gql_http_link: #[latest-version]
+  gql_code_builder_serializers: #[latest-version]
+  cupertino_icons: ^1.0.8
+  ferry: ^0.16.1+2
+  
+  build_runner: ^2.5.4
+  ferry_flutter: ^0.9.1+1
+  flutter_riverpod: ^2.6.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^5.0.0
+  ferry_generator: ^0.12.0+2
+  custom_lint: ^0.7.0
+  riverpod_lint: ^2.6.3
+flutter:
+
+
+  uses-material-design: true
+
+

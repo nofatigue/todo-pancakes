@@ -4,9 +4,6 @@ import 'package:frontend/backend.dart';
 
 import 'package:frontend/graphql/__generated__/getTasks.data.gql.dart';
 import 'package:frontend/graphql/__generated__/getTasks.req.gql.dart';
-import 'package:frontend/graphql/__generated__/getTasks.var.gql.dart';
-
-import 'package:ferry_flutter/ferry_flutter.dart';
 
 import 'package:built_collection/built_collection.dart';
 
@@ -41,111 +38,17 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    Widget page;
-    switch (currentIndex) {
-      case 0:
-        page = AddPage();
-      case 1:
-        page = TodoListPage();
-      default:
-        throw UnimplementedError("No widget for $currentIndex");
-    }
-
     return LayoutBuilder(
       builder: (context, constraints) {
         return Scaffold(
-          body: Row(
-            children: [
-              SafeArea(
-                child: NavigationRail(
-                  extended: constraints.maxWidth >= 600,
-                  destinations: [
-                    NavigationRailDestination(
-                      icon: Icon(Icons.home),
-                      label: Text('Home'),
-                    ),
-                    NavigationRailDestination(
-                      icon: Icon(Icons.task),
-                      label: Text('Todo Items'),
-                    ),
-                  ],
-                  selectedIndex: currentIndex,
-                  onDestinationSelected: (value) {
-                    setState(() {
-                      currentIndex = value;
-                    });
-                  },
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  color: Theme.of(context).colorScheme.primaryContainer,
-                  child: page,
-                ),
-              ),
-            ],
+          body: Expanded(
+            child: Container(
+              color: Theme.of(context).colorScheme.primaryContainer,
+              child: TodoListPage(),
+            ),
           ),
         );
       },
-    );
-  }
-}
-
-class AddPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final icon = Icons.favorite;
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(height: 10),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ElevatedButton.icon(
-                onPressed: () {},
-                icon: Icon(icon),
-                label: Text('Like'),
-              ),
-              SizedBox(width: 10),
-              ElevatedButton(
-                onPressed: () {
-                  () {};
-                },
-                child: Text('Next'),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class ButtonPanel extends StatelessWidget {
-  const ButtonPanel({
-    super.key,
-    required this.appState,
-    required this.likeButtonIcon,
-  });
-
-  final MyAppState appState;
-  final IconData likeButtonIcon;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        ElevatedButton.icon(
-          label: Text("Like"),
-          onPressed: () {},
-          icon: Icon(likeButtonIcon),
-        ),
-        SizedBox(width: 20),
-        ElevatedButton(onPressed: () {}, child: Text('Add')),
-      ],
     );
   }
 }
@@ -207,11 +110,15 @@ class TodoListPage extends ConsumerWidget {
               AsyncValue() => const CircularProgressIndicator(),
             },
           ),
-          ElevatedButton(
-            onPressed: () {
-              //ref.invalidate(tasksProvider);
-            },
-            child: Text('Add'),
+          Row(
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  //ref.invalidate(tasksProvider);
+                },
+                child: Text('Add'),
+              ),
+            ],
           ),
         ],
       ),

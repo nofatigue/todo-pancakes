@@ -1,11 +1,12 @@
 import asyncio
+from dataclasses import dataclass
 import datetime
 from enum import Enum, StrEnum
 import msgspec
 import strawberry
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing import AsyncGenerator, List
-import sqlalchemy
+import sqlalchemy as sa
 from sqlalchemy import ScalarResult
 
 from backend.db import orm_to_dict
@@ -15,6 +16,9 @@ from backend.db import TodoItemModel
 import redis.asyncio as redis
 
 TaskUpdatesChannelName = "todo_updates"
+#TODO: Do not copy lines with out understanding them
+#TODO: Extract DB operations into a seperate file!
+#TODO: List comprehension
 
 @strawberry.type
 class TodoItem:
@@ -39,25 +43,29 @@ class TaskUpdate():
     type: TaskUpdateType
     task: TodoItem
 
+@dataclass
+class MyContext():
+    db_session: AsyncSession
+    redis_client: redis.Redis
+    
+type Info = strawberry.Info[MyContext]
+
 @strawberry.type
 class Query:
-    #tasks: typing.List[TodoItem] = strawberry.field(resolver=get_tasks)
     @strawberry.field
-    async def tasks(self, info: strawberry.Info) -> List[TodoItem]:
-        db_session: AsyncSession = info.context["db_session"]
+    async def tasks(self, info: Info) -> List[TodoItem]:
+        db_session: AsyncSession = info.context.db_session
 
-        tasks: List[TodoItem] = []
-        tasks_rows = sqlalchemy.select(TodoItemModel)
+        tasks_rows = sa.select(TodoItemModel)
 
-        tasks_orm: ScalarResult = await db_session.scalars(tasks_rows)
+        tasks: list[TodoItem] = []
 
-        for task in tasks_orm:
-            task_dict = orm_to_dict(task)
-            tasks.append(TodoItem(id=task_dict['id'],
-                text=task_dict['text'],
-                completed=task_dict['completed'],
-                created_at=task_dict['created_at']  )
-            )
+        for task in (await db_session.scalars(tasks_rows)):
+            tasks.append(TodoItem(id=task.id,
+                completed=task.completed,
+                created_at=task.created_at,
+                 text=task.text
+            ))
 
         return tasks
 
@@ -113,4 +121,3 @@ class Subscription:
                 yield task_update
         
 
-    

@@ -1,4 +1,5 @@
 
+from typing import Any, AsyncGenerator
 import redis.asyncio as redis
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
@@ -8,6 +9,7 @@ from sqlalchemy.orm import Mapped
 import datetime
 
 from sqlalchemy import ScalarResult
+
 
 DATABASE_URL = "postgresql+psycopg://postgres:Password1@localhost:5444"
 REDIS_HOST = 'localhost'
@@ -37,7 +39,7 @@ engine = create_async_engine(DATABASE_URL, echo=True)
 async_session_factory = async_sessionmaker(engine, expire_on_commit=False)
 
 # Dependency function to get database session
-async def get_db_session():
+async def get_db_session() -> AsyncGenerator[Any, Any]:
     """Dependency for database session."""
     async with async_session_factory() as session:
         yield session

@@ -7,15 +7,16 @@ from litestar.params import Dependency
 from collections.abc import AsyncGenerator
 from litestar import Litestar, get
 from litestar.di import  Provide
-from backend.db import engine, Base, get_db_session, get_redis_client
+from backend import db
+from backend.db import TaskRepositoryService, engine, Base, get_task_repo_service
 from strawberry.litestar import make_graphql_controller
 
 import redis.asyncio as redis
 
-from backend.schema import Query, Mutation, Subscription
+from backend.schema import MyContext, Query, Mutation, Subscription
 
-def custom_context_getter(db_session: AsyncSession = Dependency(), redis_client: redis.Redis = Dependency()):
-    return {'db_session': db_session, 'redis_client' : redis_client}
+def custom_context_getter(db_service: TaskRepositoryService = Dependency()) -> MyContext:
+    return {'db_service' : db_service}
 
 @asynccontextmanager
 async def db_lifespan(app) -> AsyncGenerator[None, None]:
@@ -36,7 +37,8 @@ graphql_contoller = make_graphql_controller(schema=schema, path="/graphql", cont
 
 app = Litestar(
     route_handlers=[index, graphql_contoller],
-    dependencies={'db_session' : Provide(get_db_session),
-                  'redis_client' : Provide(get_redis_client)},
+    dependencies={'db_service' : Provide(get_task_repo_service),
+    },
     lifespan=[db_lifespan],
     )
+    

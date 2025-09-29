@@ -1,3 +1,4 @@
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from typing import Any, AsyncGenerator
 import redis.asyncio as redis
@@ -8,12 +9,14 @@ from sqlalchemy.orm import DeclarativeBase, mapped_column
 from sqlalchemy.orm import Mapped
 import datetime
 
-from sqlalchemy import ScalarResult
+from sqlalchemy import ScalarResult, Update
 
+from backend.config import DATABASE_URL
+from backend.task import TodoItem
 
-DATABASE_URL = "postgresql+psycopg://postgres:Password1@localhost:5444"
-REDIS_HOST = 'localhost'
-REDIS_PORT = 6379
+import sqlalchemy as sa
+
+from backend.updates import UpdateService, get_update_service
 
 
 # Base class for SQLAlchemy models
@@ -30,8 +33,6 @@ class TodoItemModel(Base):
     def __repr__(self):
         return f"<Item {self.text} completed: {self.completed} created_at: {self.created_at}>"
 
-
-
 # Create async SQLAlchemy engine
 engine = create_async_engine(DATABASE_URL, echo=True)
 
@@ -44,9 +45,48 @@ async def get_db_session() -> AsyncGenerator[Any, Any]:
     async with async_session_factory() as session:
         yield session
 
-def get_redis_client() -> redis.Redis:
-    return redis.Redis(host=REDIS_HOST, port=REDIS_PORT)
+async def get_task_repo_service():
+    async with async_session_factory() as db_session:
+        update_service = await get_update_service()
+        yield TaskRepositoryService(db_session=db_session, update_service=update_service)
+        
+class TaskRepositoryService():
+    def __init__(self, db_session, update_service):
+        self.db_session = db_session
+        self.update_service = update_service
 
-def orm_to_dict(orm_obj: ScalarResult) -> dict:
-    return {k: v for k, v in orm_obj.__dict__.items() if not k.startswith('_')} # type: ignore
+    db_session: AsyncSession
+    update_service: UpdateService
 
+    async def get_all_tasks(self) -> list[TodoItem]:
+        tasks_rows = sa.select(TodoItemModel)
+
+        tasks: list[TodoItem] = []
+
+        for task in (await self.db_session.scalars(tasks_rows)):
+            tasks.append(TodoItem(id=task.id,
+                completed=task.completed,
+                created_at=task.created_at,
+                 text=task.text
+            ))
+
+        return tasks
+    
+    async def add_task(self, text: str) -> TodoItem:
+        
+        new_item_model: TodoItemModel = TodoItemModel(text=text,
+            completed=False,
+            created_at=datetime.datetime.now())
+
+        # add new item to db
+        self.db_session.add(new_item_model)
+        await self.db_session.commit()
+        await self.db_session.refresh(new_item_model)
+        
+        new_item_obj: TodoItem = TodoItem(id=new_item_model.id, text=new_item_model.text, completed=new_item_model.completed, created_at=new_item_model.created_at)
+
+        await self.update_service.add_task_update(new_task=new_item_obj)
+
+        return new_item_obj
+
+        

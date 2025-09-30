@@ -1,5 +1,6 @@
 import asyncio
 from enum import StrEnum
+import logging
 import msgspec
 import redis.asyncio as redis
 import strawberry
@@ -43,17 +44,25 @@ class UpdateService():
 
             while True:
                 await asyncio.sleep(0.1)
-                msg = await pubsub.get_message(ignore_subscribe_messages=True, timeout=None)
+                msg = await pubsub.get_message(
+                    ignore_subscribe_messages=True, 
+                    timeout=None # wait indefinitely
+                    )
                 if msg is None:
+                    logging.error(f"get_message returned None")
                     continue
 
                 print(f"msg recieved: {msg}")
 
                 if not 'data' in msg.keys():
-                    print("no data")
+                    logging.error("no data")
                     continue
 
-                task_update: TaskUpdate = msgspec.json.decode(msg['data'], type=TaskUpdate)
+                try:
+                    task_update: TaskUpdate = msgspec.json.decode(msg['data'], type=TaskUpdate)
+                except msgspec.MsgspecError as e:
+                    logging.error(f"Msgspec Error: {e}")
+                    continue
 
                 yield task_update
 

@@ -61,17 +61,12 @@ class TaskRepositoryService():
     async def get_all_tasks(self) -> list[TodoItem]:
         tasks_rows = sa.select(TodoItemModel)
 
-        tasks: list[TodoItem] = []
-
-        for task in (await self.db_session.scalars(tasks_rows)):
-            tasks.append(TodoItem(id=task.id,
+        return [TodoItem(id=task.id,
                 completed=task.completed,
                 created_at=task.created_at,
-                 text=task.text
-            ))
-
-        return tasks
-    
+                 text=task.text) 
+                 for task in await self.db_session.scalars(tasks_rows)]
+        
     async def add_task(self, text: str) -> TodoItem:
         
         new_item_model: TodoItemModel = TodoItemModel(text=text,

@@ -16,11 +16,6 @@ import redis.asyncio as redis
 from backend.task import TodoItem
 from backend.updates import TaskUpdate
 
-#TODO: Do not copy lines with out understanding them
-#TODO: Maybe improve updates loop
-#TODO: List comprehension
-
-
 @strawberry.input
 class AddTaskInput:
     text: str

@@ -1,26 +1,32 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'getTasks.req.gql.dart';
+part of 'subscribeUpdates.req.gql.dart';
 
 // **************************************************************************
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<GgetTasksReq> _$ggetTasksReqSerializer = _$GgetTasksReqSerializer();
+Serializer<GsubscribeTasksUpdatesReq> _$gsubscribeTasksUpdatesReqSerializer =
+    _$GsubscribeTasksUpdatesReqSerializer();
 
-class _$GgetTasksReqSerializer implements StructuredSerializer<GgetTasksReq> {
+class _$GsubscribeTasksUpdatesReqSerializer
+    implements StructuredSerializer<GsubscribeTasksUpdatesReq> {
   @override
-  final Iterable<Type> types = const [GgetTasksReq, _$GgetTasksReq];
+  final Iterable<Type> types = const [
+    GsubscribeTasksUpdatesReq,
+    _$GsubscribeTasksUpdatesReq
+  ];
   @override
-  final String wireName = 'GgetTasksReq';
+  final String wireName = 'GsubscribeTasksUpdatesReq';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, GgetTasksReq object,
+  Iterable<Object?> serialize(
+      Serializers serializers, GsubscribeTasksUpdatesReq object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[
       'vars',
       serializers.serialize(object.vars,
-          specifiedType: const FullType(_i3.GgetTasksVars)),
+          specifiedType: const FullType(_i3.GsubscribeTasksUpdatesVars)),
       'operation',
       serializers.serialize(object.operation,
           specifiedType: const FullType(_i4.Operation)),
@@ -41,7 +47,7 @@ class _$GgetTasksReqSerializer implements StructuredSerializer<GgetTasksReq> {
       result
         ..add('optimisticResponse')
         ..add(serializers.serialize(value,
-            specifiedType: const FullType(_i2.GgetTasksData)));
+            specifiedType: const FullType(_i2.GsubscribeTasksUpdatesData)));
     }
     value = object.updateCacheHandlerKey;
     if (value != null) {
@@ -69,10 +75,10 @@ class _$GgetTasksReqSerializer implements StructuredSerializer<GgetTasksReq> {
   }
 
   @override
-  GgetTasksReq deserialize(
+  GsubscribeTasksUpdatesReq deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = GgetTasksReqBuilder();
+    final result = GsubscribeTasksUpdatesReqBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -82,8 +88,9 @@ class _$GgetTasksReqSerializer implements StructuredSerializer<GgetTasksReq> {
       switch (key) {
         case 'vars':
           result.vars.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(_i3.GgetTasksVars))!
-              as _i3.GgetTasksVars);
+                  specifiedType:
+                      const FullType(_i3.GsubscribeTasksUpdatesVars))!
+              as _i3.GsubscribeTasksUpdatesVars);
           break;
         case 'operation':
           result.operation = serializers.deserialize(value,
@@ -95,8 +102,9 @@ class _$GgetTasksReqSerializer implements StructuredSerializer<GgetTasksReq> {
           break;
         case 'optimisticResponse':
           result.optimisticResponse.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(_i2.GgetTasksData))!
-              as _i2.GgetTasksData);
+                  specifiedType:
+                      const FullType(_i2.GsubscribeTasksUpdatesData))!
+              as _i2.GsubscribeTasksUpdatesData);
           break;
         case 'updateCacheHandlerKey':
           result.updateCacheHandlerKey = serializers.deserialize(value,
@@ -125,18 +133,19 @@ class _$GgetTasksReqSerializer implements StructuredSerializer<GgetTasksReq> {
   }
 }
 
-class _$GgetTasksReq extends GgetTasksReq {
+class _$GsubscribeTasksUpdatesReq extends GsubscribeTasksUpdatesReq {
   @override
-  final _i3.GgetTasksVars vars;
+  final _i3.GsubscribeTasksUpdatesVars vars;
   @override
   final _i4.Operation operation;
   @override
   final String? requestId;
   @override
-  final _i2.GgetTasksData? Function(_i2.GgetTasksData?, _i2.GgetTasksData?)?
+  final _i2.GsubscribeTasksUpdatesData? Function(
+          _i2.GsubscribeTasksUpdatesData?, _i2.GsubscribeTasksUpdatesData?)?
       updateResult;
   @override
-  final _i2.GgetTasksData? optimisticResponse;
+  final _i2.GsubscribeTasksUpdatesData? optimisticResponse;
   @override
   final String? updateCacheHandlerKey;
   @override
@@ -148,10 +157,11 @@ class _$GgetTasksReq extends GgetTasksReq {
   @override
   final _i4.Context? context;
 
-  factory _$GgetTasksReq([void Function(GgetTasksReqBuilder)? updates]) =>
-      (GgetTasksReqBuilder()..update(updates))._build();
+  factory _$GsubscribeTasksUpdatesReq(
+          [void Function(GsubscribeTasksUpdatesReqBuilder)? updates]) =>
+      (GsubscribeTasksUpdatesReqBuilder()..update(updates))._build();
 
-  _$GgetTasksReq._(
+  _$GsubscribeTasksUpdatesReq._(
       {required this.vars,
       required this.operation,
       this.requestId,
@@ -164,17 +174,19 @@ class _$GgetTasksReq extends GgetTasksReq {
       this.context})
       : super._();
   @override
-  GgetTasksReq rebuild(void Function(GgetTasksReqBuilder) updates) =>
+  GsubscribeTasksUpdatesReq rebuild(
+          void Function(GsubscribeTasksUpdatesReqBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  GgetTasksReqBuilder toBuilder() => GgetTasksReqBuilder()..replace(this);
+  GsubscribeTasksUpdatesReqBuilder toBuilder() =>
+      GsubscribeTasksUpdatesReqBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     final dynamic _$dynamicOther = other;
-    return other is GgetTasksReq &&
+    return other is GsubscribeTasksUpdatesReq &&
         vars == other.vars &&
         operation == other.operation &&
         requestId == other.requestId &&
@@ -206,7 +218,7 @@ class _$GgetTasksReq extends GgetTasksReq {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'GgetTasksReq')
+    return (newBuiltValueToStringHelper(r'GsubscribeTasksUpdatesReq')
           ..add('vars', vars)
           ..add('operation', operation)
           ..add('requestId', requestId)
@@ -221,14 +233,15 @@ class _$GgetTasksReq extends GgetTasksReq {
   }
 }
 
-class GgetTasksReqBuilder
-    implements Builder<GgetTasksReq, GgetTasksReqBuilder> {
-  _$GgetTasksReq? _$v;
+class GsubscribeTasksUpdatesReqBuilder
+    implements
+        Builder<GsubscribeTasksUpdatesReq, GsubscribeTasksUpdatesReqBuilder> {
+  _$GsubscribeTasksUpdatesReq? _$v;
 
-  _i3.GgetTasksVarsBuilder? _vars;
-  _i3.GgetTasksVarsBuilder get vars =>
-      _$this._vars ??= _i3.GgetTasksVarsBuilder();
-  set vars(_i3.GgetTasksVarsBuilder? vars) => _$this._vars = vars;
+  _i3.GsubscribeTasksUpdatesVarsBuilder? _vars;
+  _i3.GsubscribeTasksUpdatesVarsBuilder get vars =>
+      _$this._vars ??= _i3.GsubscribeTasksUpdatesVarsBuilder();
+  set vars(_i3.GsubscribeTasksUpdatesVarsBuilder? vars) => _$this._vars = vars;
 
   _i4.Operation? _operation;
   _i4.Operation? get operation => _$this._operation;
@@ -238,19 +251,24 @@ class GgetTasksReqBuilder
   String? get requestId => _$this._requestId;
   set requestId(String? requestId) => _$this._requestId = requestId;
 
-  _i2.GgetTasksData? Function(_i2.GgetTasksData?, _i2.GgetTasksData?)?
+  _i2.GsubscribeTasksUpdatesData? Function(
+          _i2.GsubscribeTasksUpdatesData?, _i2.GsubscribeTasksUpdatesData?)?
       _updateResult;
-  _i2.GgetTasksData? Function(_i2.GgetTasksData?, _i2.GgetTasksData?)?
+  _i2.GsubscribeTasksUpdatesData? Function(
+          _i2.GsubscribeTasksUpdatesData?, _i2.GsubscribeTasksUpdatesData?)?
       get updateResult => _$this._updateResult;
   set updateResult(
-          _i2.GgetTasksData? Function(_i2.GgetTasksData?, _i2.GgetTasksData?)?
+          _i2.GsubscribeTasksUpdatesData? Function(
+                  _i2.GsubscribeTasksUpdatesData?,
+                  _i2.GsubscribeTasksUpdatesData?)?
               updateResult) =>
       _$this._updateResult = updateResult;
 
-  _i2.GgetTasksDataBuilder? _optimisticResponse;
-  _i2.GgetTasksDataBuilder get optimisticResponse =>
-      _$this._optimisticResponse ??= _i2.GgetTasksDataBuilder();
-  set optimisticResponse(_i2.GgetTasksDataBuilder? optimisticResponse) =>
+  _i2.GsubscribeTasksUpdatesDataBuilder? _optimisticResponse;
+  _i2.GsubscribeTasksUpdatesDataBuilder get optimisticResponse =>
+      _$this._optimisticResponse ??= _i2.GsubscribeTasksUpdatesDataBuilder();
+  set optimisticResponse(
+          _i2.GsubscribeTasksUpdatesDataBuilder? optimisticResponse) =>
       _$this._optimisticResponse = optimisticResponse;
 
   String? _updateCacheHandlerKey;
@@ -279,11 +297,11 @@ class GgetTasksReqBuilder
   _i4.Context? get context => _$this._context;
   set context(_i4.Context? context) => _$this._context = context;
 
-  GgetTasksReqBuilder() {
-    GgetTasksReq._initializeBuilder(this);
+  GsubscribeTasksUpdatesReqBuilder() {
+    GsubscribeTasksUpdatesReq._initializeBuilder(this);
   }
 
-  GgetTasksReqBuilder get _$this {
+  GsubscribeTasksUpdatesReqBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _vars = $v.vars.toBuilder();
@@ -302,26 +320,26 @@ class GgetTasksReqBuilder
   }
 
   @override
-  void replace(GgetTasksReq other) {
-    _$v = other as _$GgetTasksReq;
+  void replace(GsubscribeTasksUpdatesReq other) {
+    _$v = other as _$GsubscribeTasksUpdatesReq;
   }
 
   @override
-  void update(void Function(GgetTasksReqBuilder)? updates) {
+  void update(void Function(GsubscribeTasksUpdatesReqBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  GgetTasksReq build() => _build();
+  GsubscribeTasksUpdatesReq build() => _build();
 
-  _$GgetTasksReq _build() {
-    _$GgetTasksReq _$result;
+  _$GsubscribeTasksUpdatesReq _build() {
+    _$GsubscribeTasksUpdatesReq _$result;
     try {
       _$result = _$v ??
-          _$GgetTasksReq._(
+          _$GsubscribeTasksUpdatesReq._(
             vars: vars.build(),
             operation: BuiltValueNullFieldError.checkNotNull(
-                operation, r'GgetTasksReq', 'operation'),
+                operation, r'GsubscribeTasksUpdatesReq', 'operation'),
             requestId: requestId,
             updateResult: updateResult,
             optimisticResponse: _optimisticResponse?.build(),
@@ -329,7 +347,9 @@ class GgetTasksReqBuilder
             updateCacheHandlerContext: updateCacheHandlerContext,
             fetchPolicy: fetchPolicy,
             executeOnListen: BuiltValueNullFieldError.checkNotNull(
-                executeOnListen, r'GgetTasksReq', 'executeOnListen'),
+                executeOnListen,
+                r'GsubscribeTasksUpdatesReq',
+                'executeOnListen'),
             context: context,
           );
     } catch (_) {
@@ -342,7 +362,7 @@ class GgetTasksReqBuilder
         _optimisticResponse?.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
-            r'GgetTasksReq', _$failedField, e.toString());
+            r'GsubscribeTasksUpdatesReq', _$failedField, e.toString());
       }
       rethrow;
     }

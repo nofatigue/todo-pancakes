@@ -28,25 +28,3 @@ abstract class GgetTasksVars
         json,
       );
 }
-
-abstract class GTaskDetailsVars
-    implements Built<GTaskDetailsVars, GTaskDetailsVarsBuilder> {
-  GTaskDetailsVars._();
-
-  factory GTaskDetailsVars([void Function(GTaskDetailsVarsBuilder b) updates]) =
-      _$GTaskDetailsVars;
-
-  static Serializer<GTaskDetailsVars> get serializer =>
-      _$gTaskDetailsVarsSerializer;
-
-  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
-        GTaskDetailsVars.serializer,
-        this,
-      ) as Map<String, dynamic>);
-
-  static GTaskDetailsVars? fromJson(Map<String, dynamic> json) =>
-      _i1.serializers.deserializeWith(
-        GTaskDetailsVars.serializer,
-        json,
-      );
-}

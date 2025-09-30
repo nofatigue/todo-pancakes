@@ -1,8 +1,4 @@
-fragment TaskDetails on TodoItem {
-  id
-  text
-  completed
-}
+# import './taskDetails.graphql'
 
 query getTasks {
     tasks {

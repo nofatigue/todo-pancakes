@@ -16,6 +16,15 @@ Serializers _$serializers = (Serializers().toBuilder()
       ..add(GgetTasksData_tasks.serializer)
       ..add(GgetTasksReq.serializer)
       ..add(GgetTasksVars.serializer)
+      ..add(GsubscribeTasksUpdatesData.serializer)
+      ..add(GsubscribeTasksUpdatesData_tasksUpdates.serializer)
+      ..add(GsubscribeTasksUpdatesData_tasksUpdates_task.serializer)
+      ..add(GsubscribeTasksUpdatesReq.serializer)
+      ..add(GsubscribeTasksUpdatesVars.serializer)
+      ..add(GtasksUpdateDetailsData.serializer)
+      ..add(GtasksUpdateDetailsData_task.serializer)
+      ..add(GtasksUpdateDetailsReq.serializer)
+      ..add(GtasksUpdateDetailsVars.serializer)
       ..addBuilderFactory(
           const FullType(
               BuiltList, const [const FullType(GgetTasksData_tasks)]),

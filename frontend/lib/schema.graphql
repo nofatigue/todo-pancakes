@@ -4,6 +4,11 @@ type TodoItem {
     completed: Boolean!
 }
 
+type TasksUpdate {
+    type: String!
+    task: TodoItem!
+}
+
 enum Foo{
     BAR,
     BAZ
@@ -11,4 +16,8 @@ enum Foo{
 
 type Query {
     tasks: [TodoItem!]!
+}
+
+type Subscription {
+    tasksUpdates: TasksUpdate!
 }

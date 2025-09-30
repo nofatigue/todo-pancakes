@@ -1,0 +1,8 @@
+# import './taskDetails.graphql'
+
+fragment tasksUpdateDetails on TasksUpdate {
+  type
+  task {
+    ...TaskDetails
+  }
+}

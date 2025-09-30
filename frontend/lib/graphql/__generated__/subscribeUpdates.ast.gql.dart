@@ -3,22 +3,24 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:frontend/graphql/__generated__/taskDetails.ast.gql.dart' as _i2;
+import 'package:frontend/graphql/__generated__/tasksUpdateDetails.ast.gql.dart'
+    as _i3;
 import 'package:gql/ast.dart' as _i1;
 
-const getTasks = _i1.OperationDefinitionNode(
-  type: _i1.OperationType.query,
-  name: _i1.NameNode(value: 'getTasks'),
+const subscribeTasksUpdates = _i1.OperationDefinitionNode(
+  type: _i1.OperationType.subscription,
+  name: _i1.NameNode(value: 'subscribeTasksUpdates'),
   variableDefinitions: [],
   directives: [],
   selectionSet: _i1.SelectionSetNode(selections: [
     _i1.FieldNode(
-      name: _i1.NameNode(value: 'tasks'),
+      name: _i1.NameNode(value: 'tasksUpdates'),
       alias: null,
       arguments: [],
       directives: [],
       selectionSet: _i1.SelectionSetNode(selections: [
         _i1.FragmentSpreadNode(
-          name: _i1.NameNode(value: 'TaskDetails'),
+          name: _i1.NameNode(value: 'tasksUpdateDetails'),
           directives: [],
         )
       ]),
@@ -26,6 +28,7 @@ const getTasks = _i1.OperationDefinitionNode(
   ]),
 );
 const document = _i1.DocumentNode(definitions: [
-  getTasks,
+  subscribeTasksUpdates,
   _i2.TaskDetails,
+  _i3.tasksUpdateDetails,
 ]);

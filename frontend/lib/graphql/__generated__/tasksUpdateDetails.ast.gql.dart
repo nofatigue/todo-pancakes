@@ -5,14 +5,24 @@
 import 'package:frontend/graphql/__generated__/taskDetails.ast.gql.dart' as _i2;
 import 'package:gql/ast.dart' as _i1;
 
-const getTasks = _i1.OperationDefinitionNode(
-  type: _i1.OperationType.query,
-  name: _i1.NameNode(value: 'getTasks'),
-  variableDefinitions: [],
+const tasksUpdateDetails = _i1.FragmentDefinitionNode(
+  name: _i1.NameNode(value: 'tasksUpdateDetails'),
+  typeCondition: _i1.TypeConditionNode(
+      on: _i1.NamedTypeNode(
+    name: _i1.NameNode(value: 'TasksUpdate'),
+    isNonNull: false,
+  )),
   directives: [],
   selectionSet: _i1.SelectionSetNode(selections: [
     _i1.FieldNode(
-      name: _i1.NameNode(value: 'tasks'),
+      name: _i1.NameNode(value: 'type'),
+      alias: null,
+      arguments: [],
+      directives: [],
+      selectionSet: null,
+    ),
+    _i1.FieldNode(
+      name: _i1.NameNode(value: 'task'),
       alias: null,
       arguments: [],
       directives: [],
@@ -22,10 +32,10 @@ const getTasks = _i1.OperationDefinitionNode(
           directives: [],
         )
       ]),
-    )
+    ),
   ]),
 );
 const document = _i1.DocumentNode(definitions: [
-  getTasks,
+  tasksUpdateDetails,
   _i2.TaskDetails,
 ]);

@@ -9,7 +9,6 @@ import 'package:frontend/__generated__/serializers.gql.dart' as _i6;
 import 'package:frontend/graphql/__generated__/getTasks.ast.gql.dart' as _i5;
 import 'package:frontend/graphql/__generated__/getTasks.data.gql.dart' as _i2;
 import 'package:frontend/graphql/__generated__/getTasks.var.gql.dart' as _i3;
-import 'package:gql/ast.dart' as _i7;
 import 'package:gql_exec/gql_exec.dart' as _i4;
 
 part 'getTasks.req.gql.g.dart';
@@ -87,52 +86,6 @@ abstract class GgetTasksReq
   static GgetTasksReq? fromJson(Map<String, dynamic> json) =>
       _i6.serializers.deserializeWith(
         GgetTasksReq.serializer,
-        json,
-      );
-}
-
-abstract class GTaskDetailsReq
-    implements
-        Built<GTaskDetailsReq, GTaskDetailsReqBuilder>,
-        _i1.FragmentRequest<_i2.GTaskDetailsData, _i3.GTaskDetailsVars> {
-  GTaskDetailsReq._();
-
-  factory GTaskDetailsReq([void Function(GTaskDetailsReqBuilder b) updates]) =
-      _$GTaskDetailsReq;
-
-  static void _initializeBuilder(GTaskDetailsReqBuilder b) => b
-    ..document = _i5.document
-    ..fragmentName = 'TaskDetails';
-
-  @override
-  _i3.GTaskDetailsVars get vars;
-  @override
-  _i7.DocumentNode get document;
-  @override
-  String? get fragmentName;
-  @override
-  Map<String, dynamic> get idFields;
-  @override
-  _i2.GTaskDetailsData? parseData(Map<String, dynamic> json) =>
-      _i2.GTaskDetailsData.fromJson(json);
-
-  @override
-  Map<String, dynamic> varsToJson() => vars.toJson();
-
-  @override
-  Map<String, dynamic> dataToJson(_i2.GTaskDetailsData data) => data.toJson();
-
-  static Serializer<GTaskDetailsReq> get serializer =>
-      _$gTaskDetailsReqSerializer;
-
-  Map<String, dynamic> toJson() => (_i6.serializers.serializeWith(
-        GTaskDetailsReq.serializer,
-        this,
-      ) as Map<String, dynamic>);
-
-  static GTaskDetailsReq? fromJson(Map<String, dynamic> json) =>
-      _i6.serializers.deserializeWith(
-        GTaskDetailsReq.serializer,
         json,
       );
 }

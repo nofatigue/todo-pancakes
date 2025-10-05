@@ -1,9 +1,6 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/backend.dart';
-import 'package:frontend/client.dart';
 import 'package:frontend/graphql/__generated__/taskDetails.data.gql.dart';
 
 class TodoItemCard extends StatelessWidget {
@@ -43,28 +40,22 @@ class TodoListPage extends ConsumerWidget {
       body: Column(
         children: [
           Expanded(
-            child: switch (futureTaskList) {
-              AsyncValue(hasValue: true, :final value?) => ListView.builder(
-                itemCount: value.length,
-                itemBuilder:
-                    (context, index) => TodoItemCard(task: value[index]),
-              ),
-              AsyncValue(error: != null) => const Text("Couldn't fetch tasks!"),
-              AsyncValue() => const CircularProgressIndicator(),
-            },
+            child: futureTaskList.when(
+              data:
+                  (data) => ListView.builder(
+                    itemCount: data.length,
+                    itemBuilder:
+                        (context, index) => TodoItemCard(task: data[index]),
+                  ),
+
+              error: (error, stackTrace) => Text("Couldn't fetch tasks!"),
+              loading: () => const CircularProgressIndicator(),
+            ),
           ),
           Row(
             children: [
               ElevatedButton(
                 onPressed: () {
-                  print("click");
-                  //ref.invalidate(tasksQueryProvider);
-                },
-                child: Text('Nothing'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  print("Subscribe");
                   ref.invalidate(tasksUpdatesProvider);
                 },
                 child: Text('Subscribe'),

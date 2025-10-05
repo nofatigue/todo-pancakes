@@ -1,25 +1,17 @@
-import 'dart:async';
-
-import 'package:built_collection/built_collection.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/client.dart';
 import 'package:frontend/graphql/__generated__/getTasks.data.gql.dart';
-import 'package:frontend/graphql/__generated__/getTasks.req.gql.dart';
 import 'package:frontend/graphql/__generated__/subscribeUpdates.data.gql.dart';
 import 'package:frontend/graphql/__generated__/subscribeUpdates.req.gql.dart';
 import 'package:frontend/graphql/__generated__/subscribeUpdates.var.gql.dart';
-import 'package:ferry/ferry.dart';
-import 'package:frontend/__generated__/schema.schema.gql.dart'
-    show possibleTypesMap;
+import 'package:frontend/utils.dart';
 
 typedef TodoItem = GgetTasksData_tasks;
 typedef TodoItemList = List<TodoItem>;
 typedef TasksUpdate = GsubscribeTasksUpdatesData_tasksUpdates;
 
-final tasksUpdatesProvider = StreamProvider<TodoItemList?>((ref) {
+final tasksUpdatesProvider = StreamProvider<TodoItemList>((ref) {
   final request = GsubscribeTasksUpdatesReq();
-  print("tasksUpdatesProvider");
   try {
     final resultStream = subsGraphClient
         .request<GsubscribeTasksUpdatesData, GsubscribeTasksUpdatesVars>(
@@ -43,13 +35,13 @@ final tasksUpdatesProvider = StreamProvider<TodoItemList?>((ref) {
                   .toList(),
         );
 
-    print("finished");
+    myDebugPrint("finished");
 
-    final subscription = newStream.listen(print); // A StreamSubscription<int>.
+    newStream.listen(myDebugPrint); // A StreamSubscription<int>.
 
     return newStream;
   } catch (e) {
-    print("Failed to get task updates: $e");
+    myDebugPrint("Failed to get task updates: $e");
     rethrow;
   }
 });

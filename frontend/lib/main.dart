@@ -1,15 +1,8 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:frontend/backend.dart';
-
 import 'package:frontend/todo_list_page.dart';
-import 'package:get_it/get_it.dart';
 
 void main() async {
-
-
   runApp(ProviderScope(child: MyApp()));
 }
 

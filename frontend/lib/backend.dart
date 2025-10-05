@@ -6,7 +6,7 @@ import 'package:frontend/graphql/__generated__/subscribeUpdates.req.gql.dart';
 import 'package:frontend/graphql/__generated__/subscribeUpdates.var.gql.dart';
 import 'package:frontend/utils.dart';
 
-typedef TodoItem = GsubscribeTasksUpdatesData_tasksUpdates_tasks;
+typedef TodoItem = GsubscribeTasksUpdatesData_tasksUpdates;
 typedef TodoItemList = List<TodoItem>;
 typedef TasksUpdate = GsubscribeTasksUpdatesData_tasksUpdates;
 
@@ -18,7 +18,7 @@ final tasksUpdatesProvider = StreamProvider<TodoItemList>((ref) async* {
           request,
         );
     await for (final res in resultStream) {
-      final tasks = res.data!.tasksUpdates.tasks.toList();
+      final tasks = res.data!.tasksUpdates.toList();
 
       if (kDebugMode) {
         myDebugPrint(res);

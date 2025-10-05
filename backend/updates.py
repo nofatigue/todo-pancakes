@@ -1,4 +1,5 @@
 import asyncio
+from dataclasses import dataclass
 from enum import StrEnum
 import logging
 from typing import AsyncGenerator, Final, List
@@ -17,14 +18,14 @@ async def get_redis_client() -> redis.Redis:
     return await redis.Redis(host=REDIS_HOST, port=REDIS_PORT)
 
 
-@strawberry.enum
-class TasksUpdateType(StrEnum):
-    ADD = 'add'
-    INIT = 'init'
+class TasksUpdateNotificationType(StrEnum):
+    MODIFY = 'modify'
+    DELETE = 'delete'
 
-@strawberry.type
-class TasksUpdate():
-    type: TasksUpdateType
+@dataclass
+class TasksUpdateNotification():
+    type: TasksUpdateNotificationType
+    # this might be invalied for delete
     tasks: List[TodoItem]
 
 class UpdateService():
@@ -35,21 +36,23 @@ class UpdateService():
     redis_client: redis.Redis
     db_service: DbService
 
-    async def tasks_update_type_add(self, add_list: list[TodoItem]):
-        task_update: TasksUpdate = TasksUpdate(type = TasksUpdateType.ADD, tasks = add_list)
+    async def tasks_update_type_modify(self, modify_list: list[TodoItem]):
+        task_update = TasksUpdateNotification(type = TasksUpdateNotificationType.MODIFY, tasks = modify_list)
         await self.redis_client.publish(TASKS_UPDATES_CHANNEL_NAME, msgspec.json.encode(task_update))
 
-    async def todo_update_generator(self) -> AsyncGenerator[TasksUpdate, None]:
+    async def todo_update_generator(self) -> AsyncGenerator[List[TodoItem], None]:
         
-        all_tasks = await self.db_service.get_all_tasks()
+        all_tasks_list = await self.db_service.get_all_tasks()
+        
+        all_tasks_dict = {item.id : item for item in all_tasks_list}
 
         async with self.redis_client.pubsub() as pubsub:
         
             await pubsub.subscribe(TASKS_UPDATES_CHANNEL_NAME)
 
             # send subscriber the initial copy the task list
-            task_update_to_subscribers: TasksUpdate = TasksUpdate(type = TasksUpdateType.INIT, tasks = all_tasks)
-            yield task_update_to_subscribers
+            
+            yield list(all_tasks_dict.values())
 
             while True:
                 await asyncio.sleep(0.1)
@@ -68,20 +71,24 @@ class UpdateService():
                     continue
 
                 try:
-                    task_update_from_redis: TasksUpdate = msgspec.json.decode(msg['data'], type=TasksUpdate)
+                    task_update_notification: TasksUpdateNotification = msgspec.json.decode(msg['data'], type=TasksUpdateNotification)
                 except msgspec.MsgspecError as e:
                     logging.error(f"Msgspec Error: {e}")
                     continue
                     
                 
-                if task_update_from_redis.type == TasksUpdateType.ADD:
-                    all_tasks += task_update_from_redis.tasks
-                else:
-                    logging.error(f"Unimplemented task_update_from_redis.type: {task_update_from_redis.type} ")
+                if task_update_notification.type == TasksUpdateNotificationType.MODIFY:
+                    tasks_modify_list = task_update_notification.tasks
 
-                # for subscribers, always send type INIT (send the whole list)
-                task_update_to_subscribers: TasksUpdate = TasksUpdate(type = TasksUpdateType.INIT, tasks = all_tasks)
-                yield task_update_to_subscribers
+                    to_modify_dict = {item.id : item for item in tasks_modify_list}
+
+                    # update our task list copy with the modifications
+                    all_tasks_dict.update(to_modify_dict)
+
+                else:
+                    logging.error(f"Unimplemented task_update_notification.type: {task_update_notification.type} ")
+
+                yield list(all_tasks_dict.values())
 
 
 async def get_update_service(db_service: DbService) -> UpdateService:

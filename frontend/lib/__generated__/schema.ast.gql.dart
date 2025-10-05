@@ -44,15 +44,6 @@ const TasksUpdate = _i1.ObjectTypeDefinitionNode(
   interfaces: [],
   fields: [
     _i1.FieldDefinitionNode(
-      name: _i1.NameNode(value: 'type'),
-      directives: [],
-      args: [],
-      type: _i1.NamedTypeNode(
-        name: _i1.NameNode(value: 'String'),
-        isNonNull: true,
-      ),
-    ),
-    _i1.FieldDefinitionNode(
       name: _i1.NameNode(value: 'tasks'),
       directives: [],
       args: [],
@@ -63,7 +54,7 @@ const TasksUpdate = _i1.ObjectTypeDefinitionNode(
         ),
         isNonNull: true,
       ),
-    ),
+    )
   ],
 );
 const Foo = _i1.EnumTypeDefinitionNode(
@@ -108,8 +99,11 @@ const Subscription = _i1.ObjectTypeDefinitionNode(
       name: _i1.NameNode(value: 'tasksUpdates'),
       directives: [],
       args: [],
-      type: _i1.NamedTypeNode(
-        name: _i1.NameNode(value: 'TasksUpdate'),
+      type: _i1.ListTypeNode(
+        type: _i1.NamedTypeNode(
+          name: _i1.NameNode(value: 'TodoItem'),
+          isNonNull: true,
+        ),
         isNonNull: true,
       ),
     )

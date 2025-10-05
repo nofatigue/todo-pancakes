@@ -11,9 +11,6 @@ Serializer<GsubscribeTasksUpdatesData> _$gsubscribeTasksUpdatesDataSerializer =
 Serializer<GsubscribeTasksUpdatesData_tasksUpdates>
     _$gsubscribeTasksUpdatesDataTasksUpdatesSerializer =
     _$GsubscribeTasksUpdatesData_tasksUpdatesSerializer();
-Serializer<GsubscribeTasksUpdatesData_tasksUpdates_tasks>
-    _$gsubscribeTasksUpdatesDataTasksUpdatesTasksSerializer =
-    _$GsubscribeTasksUpdatesData_tasksUpdates_tasksSerializer();
 
 class _$GsubscribeTasksUpdatesDataSerializer
     implements StructuredSerializer<GsubscribeTasksUpdatesData> {
@@ -35,8 +32,8 @@ class _$GsubscribeTasksUpdatesDataSerializer
           specifiedType: const FullType(String)),
       'tasksUpdates',
       serializers.serialize(object.tasksUpdates,
-          specifiedType:
-              const FullType(GsubscribeTasksUpdatesData_tasksUpdates)),
+          specifiedType: const FullType(BuiltList,
+              const [const FullType(GsubscribeTasksUpdatesData_tasksUpdates)])),
     ];
 
     return result;
@@ -60,9 +57,9 @@ class _$GsubscribeTasksUpdatesDataSerializer
           break;
         case 'tasksUpdates':
           result.tasksUpdates.replace(serializers.deserialize(value,
-                  specifiedType:
-                      const FullType(GsubscribeTasksUpdatesData_tasksUpdates))!
-              as GsubscribeTasksUpdatesData_tasksUpdates);
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(GsubscribeTasksUpdatesData_tasksUpdates)
+              ]))! as BuiltList<Object?>);
           break;
       }
     }
@@ -89,70 +86,6 @@ class _$GsubscribeTasksUpdatesData_tasksUpdatesSerializer
       '__typename',
       serializers.serialize(object.G__typename,
           specifiedType: const FullType(String)),
-      'type',
-      serializers.serialize(object.type, specifiedType: const FullType(String)),
-      'tasks',
-      serializers.serialize(object.tasks,
-          specifiedType: const FullType(BuiltList, const [
-            const FullType(GsubscribeTasksUpdatesData_tasksUpdates_tasks)
-          ])),
-    ];
-
-    return result;
-  }
-
-  @override
-  GsubscribeTasksUpdatesData_tasksUpdates deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
-    final result = GsubscribeTasksUpdatesData_tasksUpdatesBuilder();
-
-    final iterator = serialized.iterator;
-    while (iterator.moveNext()) {
-      final key = iterator.current! as String;
-      iterator.moveNext();
-      final Object? value = iterator.current;
-      switch (key) {
-        case '__typename':
-          result.G__typename = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
-          break;
-        case 'type':
-          result.type = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
-          break;
-        case 'tasks':
-          result.tasks.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltList, const [
-                const FullType(GsubscribeTasksUpdatesData_tasksUpdates_tasks)
-              ]))! as BuiltList<Object?>);
-          break;
-      }
-    }
-
-    return result.build();
-  }
-}
-
-class _$GsubscribeTasksUpdatesData_tasksUpdates_tasksSerializer
-    implements
-        StructuredSerializer<GsubscribeTasksUpdatesData_tasksUpdates_tasks> {
-  @override
-  final Iterable<Type> types = const [
-    GsubscribeTasksUpdatesData_tasksUpdates_tasks,
-    _$GsubscribeTasksUpdatesData_tasksUpdates_tasks
-  ];
-  @override
-  final String wireName = 'GsubscribeTasksUpdatesData_tasksUpdates_tasks';
-
-  @override
-  Iterable<Object?> serialize(Serializers serializers,
-      GsubscribeTasksUpdatesData_tasksUpdates_tasks object,
-      {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object?>[
-      '__typename',
-      serializers.serialize(object.G__typename,
-          specifiedType: const FullType(String)),
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(int)),
       'text',
@@ -166,10 +99,10 @@ class _$GsubscribeTasksUpdatesData_tasksUpdates_tasksSerializer
   }
 
   @override
-  GsubscribeTasksUpdatesData_tasksUpdates_tasks deserialize(
+  GsubscribeTasksUpdatesData_tasksUpdates deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = GsubscribeTasksUpdatesData_tasksUpdates_tasksBuilder();
+    final result = GsubscribeTasksUpdatesData_tasksUpdatesBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -204,7 +137,7 @@ class _$GsubscribeTasksUpdatesData extends GsubscribeTasksUpdatesData {
   @override
   final String G__typename;
   @override
-  final GsubscribeTasksUpdatesData_tasksUpdates tasksUpdates;
+  final BuiltList<GsubscribeTasksUpdatesData_tasksUpdates> tasksUpdates;
 
   factory _$GsubscribeTasksUpdatesData(
           [void Function(GsubscribeTasksUpdatesDataBuilder)? updates]) =>
@@ -257,11 +190,12 @@ class GsubscribeTasksUpdatesDataBuilder
   String? get G__typename => _$this._G__typename;
   set G__typename(String? G__typename) => _$this._G__typename = G__typename;
 
-  GsubscribeTasksUpdatesData_tasksUpdatesBuilder? _tasksUpdates;
-  GsubscribeTasksUpdatesData_tasksUpdatesBuilder get tasksUpdates =>
-      _$this._tasksUpdates ??= GsubscribeTasksUpdatesData_tasksUpdatesBuilder();
+  ListBuilder<GsubscribeTasksUpdatesData_tasksUpdates>? _tasksUpdates;
+  ListBuilder<GsubscribeTasksUpdatesData_tasksUpdates> get tasksUpdates =>
+      _$this._tasksUpdates ??=
+          ListBuilder<GsubscribeTasksUpdatesData_tasksUpdates>();
   set tasksUpdates(
-          GsubscribeTasksUpdatesData_tasksUpdatesBuilder? tasksUpdates) =>
+          ListBuilder<GsubscribeTasksUpdatesData_tasksUpdates>? tasksUpdates) =>
       _$this._tasksUpdates = tasksUpdates;
 
   GsubscribeTasksUpdatesDataBuilder() {
@@ -321,9 +255,11 @@ class _$GsubscribeTasksUpdatesData_tasksUpdates
   @override
   final String G__typename;
   @override
-  final String type;
+  final int id;
   @override
-  final BuiltList<GsubscribeTasksUpdatesData_tasksUpdates_tasks> tasks;
+  final String text;
+  @override
+  final bool completed;
 
   factory _$GsubscribeTasksUpdatesData_tasksUpdates(
           [void Function(GsubscribeTasksUpdatesData_tasksUpdatesBuilder)?
@@ -332,7 +268,10 @@ class _$GsubscribeTasksUpdatesData_tasksUpdates
           ._build();
 
   _$GsubscribeTasksUpdatesData_tasksUpdates._(
-      {required this.G__typename, required this.type, required this.tasks})
+      {required this.G__typename,
+      required this.id,
+      required this.text,
+      required this.completed})
       : super._();
   @override
   GsubscribeTasksUpdatesData_tasksUpdates rebuild(
@@ -348,149 +287,6 @@ class _$GsubscribeTasksUpdatesData_tasksUpdates
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is GsubscribeTasksUpdatesData_tasksUpdates &&
-        G__typename == other.G__typename &&
-        type == other.type &&
-        tasks == other.tasks;
-  }
-
-  @override
-  int get hashCode {
-    var _$hash = 0;
-    _$hash = $jc(_$hash, G__typename.hashCode);
-    _$hash = $jc(_$hash, type.hashCode);
-    _$hash = $jc(_$hash, tasks.hashCode);
-    _$hash = $jf(_$hash);
-    return _$hash;
-  }
-
-  @override
-  String toString() {
-    return (newBuiltValueToStringHelper(
-            r'GsubscribeTasksUpdatesData_tasksUpdates')
-          ..add('G__typename', G__typename)
-          ..add('type', type)
-          ..add('tasks', tasks))
-        .toString();
-  }
-}
-
-class GsubscribeTasksUpdatesData_tasksUpdatesBuilder
-    implements
-        Builder<GsubscribeTasksUpdatesData_tasksUpdates,
-            GsubscribeTasksUpdatesData_tasksUpdatesBuilder> {
-  _$GsubscribeTasksUpdatesData_tasksUpdates? _$v;
-
-  String? _G__typename;
-  String? get G__typename => _$this._G__typename;
-  set G__typename(String? G__typename) => _$this._G__typename = G__typename;
-
-  String? _type;
-  String? get type => _$this._type;
-  set type(String? type) => _$this._type = type;
-
-  ListBuilder<GsubscribeTasksUpdatesData_tasksUpdates_tasks>? _tasks;
-  ListBuilder<GsubscribeTasksUpdatesData_tasksUpdates_tasks> get tasks =>
-      _$this._tasks ??=
-          ListBuilder<GsubscribeTasksUpdatesData_tasksUpdates_tasks>();
-  set tasks(
-          ListBuilder<GsubscribeTasksUpdatesData_tasksUpdates_tasks>? tasks) =>
-      _$this._tasks = tasks;
-
-  GsubscribeTasksUpdatesData_tasksUpdatesBuilder() {
-    GsubscribeTasksUpdatesData_tasksUpdates._initializeBuilder(this);
-  }
-
-  GsubscribeTasksUpdatesData_tasksUpdatesBuilder get _$this {
-    final $v = _$v;
-    if ($v != null) {
-      _G__typename = $v.G__typename;
-      _type = $v.type;
-      _tasks = $v.tasks.toBuilder();
-      _$v = null;
-    }
-    return this;
-  }
-
-  @override
-  void replace(GsubscribeTasksUpdatesData_tasksUpdates other) {
-    _$v = other as _$GsubscribeTasksUpdatesData_tasksUpdates;
-  }
-
-  @override
-  void update(
-      void Function(GsubscribeTasksUpdatesData_tasksUpdatesBuilder)? updates) {
-    if (updates != null) updates(this);
-  }
-
-  @override
-  GsubscribeTasksUpdatesData_tasksUpdates build() => _build();
-
-  _$GsubscribeTasksUpdatesData_tasksUpdates _build() {
-    _$GsubscribeTasksUpdatesData_tasksUpdates _$result;
-    try {
-      _$result = _$v ??
-          _$GsubscribeTasksUpdatesData_tasksUpdates._(
-            G__typename: BuiltValueNullFieldError.checkNotNull(G__typename,
-                r'GsubscribeTasksUpdatesData_tasksUpdates', 'G__typename'),
-            type: BuiltValueNullFieldError.checkNotNull(
-                type, r'GsubscribeTasksUpdatesData_tasksUpdates', 'type'),
-            tasks: tasks.build(),
-          );
-    } catch (_) {
-      late String _$failedField;
-      try {
-        _$failedField = 'tasks';
-        tasks.build();
-      } catch (e) {
-        throw BuiltValueNestedFieldError(
-            r'GsubscribeTasksUpdatesData_tasksUpdates',
-            _$failedField,
-            e.toString());
-      }
-      rethrow;
-    }
-    replace(_$result);
-    return _$result;
-  }
-}
-
-class _$GsubscribeTasksUpdatesData_tasksUpdates_tasks
-    extends GsubscribeTasksUpdatesData_tasksUpdates_tasks {
-  @override
-  final String G__typename;
-  @override
-  final int id;
-  @override
-  final String text;
-  @override
-  final bool completed;
-
-  factory _$GsubscribeTasksUpdatesData_tasksUpdates_tasks(
-          [void Function(GsubscribeTasksUpdatesData_tasksUpdates_tasksBuilder)?
-              updates]) =>
-      (GsubscribeTasksUpdatesData_tasksUpdates_tasksBuilder()..update(updates))
-          ._build();
-
-  _$GsubscribeTasksUpdatesData_tasksUpdates_tasks._(
-      {required this.G__typename,
-      required this.id,
-      required this.text,
-      required this.completed})
-      : super._();
-  @override
-  GsubscribeTasksUpdatesData_tasksUpdates_tasks rebuild(
-          void Function(GsubscribeTasksUpdatesData_tasksUpdates_tasksBuilder)
-              updates) =>
-      (toBuilder()..update(updates)).build();
-
-  @override
-  GsubscribeTasksUpdatesData_tasksUpdates_tasksBuilder toBuilder() =>
-      GsubscribeTasksUpdatesData_tasksUpdates_tasksBuilder()..replace(this);
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(other, this)) return true;
-    return other is GsubscribeTasksUpdatesData_tasksUpdates_tasks &&
         G__typename == other.G__typename &&
         id == other.id &&
         text == other.text &&
@@ -511,7 +307,7 @@ class _$GsubscribeTasksUpdatesData_tasksUpdates_tasks
   @override
   String toString() {
     return (newBuiltValueToStringHelper(
-            r'GsubscribeTasksUpdatesData_tasksUpdates_tasks')
+            r'GsubscribeTasksUpdatesData_tasksUpdates')
           ..add('G__typename', G__typename)
           ..add('id', id)
           ..add('text', text)
@@ -520,11 +316,11 @@ class _$GsubscribeTasksUpdatesData_tasksUpdates_tasks
   }
 }
 
-class GsubscribeTasksUpdatesData_tasksUpdates_tasksBuilder
+class GsubscribeTasksUpdatesData_tasksUpdatesBuilder
     implements
-        Builder<GsubscribeTasksUpdatesData_tasksUpdates_tasks,
-            GsubscribeTasksUpdatesData_tasksUpdates_tasksBuilder> {
-  _$GsubscribeTasksUpdatesData_tasksUpdates_tasks? _$v;
+        Builder<GsubscribeTasksUpdatesData_tasksUpdates,
+            GsubscribeTasksUpdatesData_tasksUpdatesBuilder> {
+  _$GsubscribeTasksUpdatesData_tasksUpdates? _$v;
 
   String? _G__typename;
   String? get G__typename => _$this._G__typename;
@@ -542,11 +338,11 @@ class GsubscribeTasksUpdatesData_tasksUpdates_tasksBuilder
   bool? get completed => _$this._completed;
   set completed(bool? completed) => _$this._completed = completed;
 
-  GsubscribeTasksUpdatesData_tasksUpdates_tasksBuilder() {
-    GsubscribeTasksUpdatesData_tasksUpdates_tasks._initializeBuilder(this);
+  GsubscribeTasksUpdatesData_tasksUpdatesBuilder() {
+    GsubscribeTasksUpdatesData_tasksUpdates._initializeBuilder(this);
   }
 
-  GsubscribeTasksUpdatesData_tasksUpdates_tasksBuilder get _$this {
+  GsubscribeTasksUpdatesData_tasksUpdatesBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _G__typename = $v.G__typename;
@@ -559,31 +355,30 @@ class GsubscribeTasksUpdatesData_tasksUpdates_tasksBuilder
   }
 
   @override
-  void replace(GsubscribeTasksUpdatesData_tasksUpdates_tasks other) {
-    _$v = other as _$GsubscribeTasksUpdatesData_tasksUpdates_tasks;
+  void replace(GsubscribeTasksUpdatesData_tasksUpdates other) {
+    _$v = other as _$GsubscribeTasksUpdatesData_tasksUpdates;
   }
 
   @override
   void update(
-      void Function(GsubscribeTasksUpdatesData_tasksUpdates_tasksBuilder)?
-          updates) {
+      void Function(GsubscribeTasksUpdatesData_tasksUpdatesBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  GsubscribeTasksUpdatesData_tasksUpdates_tasks build() => _build();
+  GsubscribeTasksUpdatesData_tasksUpdates build() => _build();
 
-  _$GsubscribeTasksUpdatesData_tasksUpdates_tasks _build() {
+  _$GsubscribeTasksUpdatesData_tasksUpdates _build() {
     final _$result = _$v ??
-        _$GsubscribeTasksUpdatesData_tasksUpdates_tasks._(
+        _$GsubscribeTasksUpdatesData_tasksUpdates._(
           G__typename: BuiltValueNullFieldError.checkNotNull(G__typename,
-              r'GsubscribeTasksUpdatesData_tasksUpdates_tasks', 'G__typename'),
+              r'GsubscribeTasksUpdatesData_tasksUpdates', 'G__typename'),
           id: BuiltValueNullFieldError.checkNotNull(
-              id, r'GsubscribeTasksUpdatesData_tasksUpdates_tasks', 'id'),
+              id, r'GsubscribeTasksUpdatesData_tasksUpdates', 'id'),
           text: BuiltValueNullFieldError.checkNotNull(
-              text, r'GsubscribeTasksUpdatesData_tasksUpdates_tasks', 'text'),
+              text, r'GsubscribeTasksUpdatesData_tasksUpdates', 'text'),
           completed: BuiltValueNullFieldError.checkNotNull(completed,
-              r'GsubscribeTasksUpdatesData_tasksUpdates_tasks', 'completed'),
+              r'GsubscribeTasksUpdatesData_tasksUpdates', 'completed'),
         );
     replace(_$result);
     return _$result;

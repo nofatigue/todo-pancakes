@@ -14,7 +14,6 @@ from backend.db import TodoItemModel
 import redis.asyncio as redis
 
 from backend.task import TodoItem
-from backend.updates import TasksUpdate, TasksUpdateType
 
 @strawberry.input
 class AddTaskInput:
@@ -47,11 +46,8 @@ class Mutation:
 @strawberry.type
 class Subscription:
     @strawberry.subscription
-    async def tasks_updates(self, info: MyStrawberryInfo) -> AsyncGenerator[TasksUpdate, None]:
+    async def tasks_updates(self, info: MyStrawberryInfo) -> AsyncGenerator[List[TodoItem], None]:
         update_service = info.context['task_service'].update_service
-
-        # immediately generate a TasksUpdate for initial list
-        yield TasksUpdate(type=TasksUpdateType.INIT, tasks=[])
 
         async for update in update_service.todo_update_generator():
             yield update

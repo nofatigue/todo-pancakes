@@ -36,6 +36,6 @@ class TaskService():
 
         new_task = await self.db_service.add_task(text)
 
-        await self.update_service.tasks_update_type_add(add_list=[new_task])
+        await self.update_service.tasks_update_type_modify(modify_list=[new_task])
 
         return new_task

@@ -5,7 +5,6 @@ type TodoItem {
 }
 
 type TasksUpdate {
-    type: String!
     tasks: [TodoItem!]!
 }
 
@@ -19,5 +18,5 @@ type Query {
 }
 
 type Subscription {
-    tasksUpdates: TasksUpdate!
+    tasksUpdates: [TodoItem!]!
 }

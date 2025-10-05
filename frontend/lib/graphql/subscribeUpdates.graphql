@@ -1,8 +1,7 @@
 # import './taskDetails.graphql'
-# import './tasksUpdateDetails.graphql'
 
 subscription subscribeTasksUpdates {
     tasksUpdates {
-        ...tasksUpdateDetails
+        ...TaskDetails
     }
 }

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/client.dart';
 import 'package:frontend/graphql/__generated__/getTasks.data.gql.dart';
@@ -37,7 +38,9 @@ final tasksUpdatesProvider = StreamProvider<TodoItemList>((ref) {
 
     myDebugPrint("finished");
 
-    newStream.listen(myDebugPrint); // A StreamSubscription<int>.
+    if (kDebugMode) {
+      newStream.listen(myDebugPrint); // A StreamSubscription<int>.
+    }
 
     return newStream;
   } catch (e) {

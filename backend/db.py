@@ -51,6 +51,9 @@ async def get_task_repo_service():
         yield TaskRepositoryService(db_session=db_session, update_service=update_service)
         
 class TaskRepositoryService():
+    """
+    Handle db operations
+    """
     def __init__(self, db_session, update_service):
         self.db_session = db_session
         self.update_service = update_service
@@ -59,6 +62,10 @@ class TaskRepositoryService():
     update_service: UpdateService
 
     async def get_all_tasks(self) -> list[TodoItem]:
+        """
+        Read all tasks from db and return
+        """
+
         tasks_rows = sa.select(TodoItemModel)
 
         return [TodoItem(id=task.id,
@@ -68,7 +75,10 @@ class TaskRepositoryService():
                  for task in await self.db_session.scalars(tasks_rows)]
         
     async def add_task(self, text: str) -> TodoItem:
-        
+        """
+        Write a single task to db and update on updates channel
+        """
+
         new_item_model: TodoItemModel = TodoItemModel(text=text,
             completed=False,
             created_at=datetime.datetime.now())
@@ -85,6 +95,9 @@ class TaskRepositoryService():
         return new_item_obj
 
     async def send_updates_for_subscribers(self):
+        """
+        Create an INIT update with new task list
+        """
         tasks = await self.get_all_tasks()
 
         await self.update_service.tasks_update_type_init(init_list=tasks)

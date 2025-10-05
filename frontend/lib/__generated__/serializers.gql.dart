@@ -7,11 +7,23 @@ import 'package:built_value/standard_json_plugin.dart' show StandardJsonPlugin;
 import 'package:ferry_exec/ferry_exec.dart';
 import 'package:frontend/__generated__/schema.schema.gql.dart' show GFoo;
 import 'package:frontend/graphql/__generated__/getTasks.data.gql.dart'
-    show GTaskDetailsData, GgetTasksData, GgetTasksData_tasks;
+    show GgetTasksData, GgetTasksData_tasks;
 import 'package:frontend/graphql/__generated__/getTasks.req.gql.dart'
-    show GTaskDetailsReq, GgetTasksReq;
+    show GgetTasksReq;
 import 'package:frontend/graphql/__generated__/getTasks.var.gql.dart'
-    show GTaskDetailsVars, GgetTasksVars;
+    show GgetTasksVars;
+import 'package:frontend/graphql/__generated__/subscribeUpdates.data.gql.dart'
+    show GsubscribeTasksUpdatesData, GsubscribeTasksUpdatesData_tasksUpdates;
+import 'package:frontend/graphql/__generated__/subscribeUpdates.req.gql.dart'
+    show GsubscribeTasksUpdatesReq;
+import 'package:frontend/graphql/__generated__/subscribeUpdates.var.gql.dart'
+    show GsubscribeTasksUpdatesVars;
+import 'package:frontend/graphql/__generated__/taskDetails.data.gql.dart'
+    show GTaskDetailsData;
+import 'package:frontend/graphql/__generated__/taskDetails.req.gql.dart'
+    show GTaskDetailsReq;
+import 'package:frontend/graphql/__generated__/taskDetails.var.gql.dart'
+    show GTaskDetailsVars;
 import 'package:gql_code_builder_serializers/gql_code_builder_serializers.dart'
     show OperationSerializer;
 
@@ -29,5 +41,9 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GgetTasksData_tasks,
   GgetTasksReq,
   GgetTasksVars,
+  GsubscribeTasksUpdatesData,
+  GsubscribeTasksUpdatesData_tasksUpdates,
+  GsubscribeTasksUpdatesReq,
+  GsubscribeTasksUpdatesVars,
 ])
 final Serializers serializers = _serializersBuilder.build();

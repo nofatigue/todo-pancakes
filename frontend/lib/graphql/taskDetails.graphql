@@ -1,0 +1,5 @@
+fragment TaskDetails on TodoItem {
+  id
+  text
+  completed
+}

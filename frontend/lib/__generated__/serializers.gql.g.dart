@@ -16,10 +16,18 @@ Serializers _$serializers = (Serializers().toBuilder()
       ..add(GgetTasksData_tasks.serializer)
       ..add(GgetTasksReq.serializer)
       ..add(GgetTasksVars.serializer)
+      ..add(GsubscribeTasksUpdatesData.serializer)
+      ..add(GsubscribeTasksUpdatesData_tasksUpdates.serializer)
+      ..add(GsubscribeTasksUpdatesReq.serializer)
+      ..add(GsubscribeTasksUpdatesVars.serializer)
       ..addBuilderFactory(
           const FullType(
               BuiltList, const [const FullType(GgetTasksData_tasks)]),
-          () => ListBuilder<GgetTasksData_tasks>()))
+          () => ListBuilder<GgetTasksData_tasks>())
+      ..addBuilderFactory(
+          const FullType(BuiltList,
+              const [const FullType(GsubscribeTasksUpdatesData_tasksUpdates)]),
+          () => ListBuilder<GsubscribeTasksUpdatesData_tasksUpdates>()))
     .build();
 
 // ignore_for_file: deprecated_member_use_from_same_package,type=lint

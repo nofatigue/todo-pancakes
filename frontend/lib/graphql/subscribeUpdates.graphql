@@ -1,7 +1,7 @@
 # import './taskDetails.graphql'
 
-query getTasks {
-    tasks {
+subscription subscribeTasksUpdates {
+    tasksUpdates {
         ...TaskDetails
     }
 }

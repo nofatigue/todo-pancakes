@@ -38,6 +38,25 @@ const TodoItem = _i1.ObjectTypeDefinitionNode(
     ),
   ],
 );
+const TasksUpdate = _i1.ObjectTypeDefinitionNode(
+  name: _i1.NameNode(value: 'TasksUpdate'),
+  directives: [],
+  interfaces: [],
+  fields: [
+    _i1.FieldDefinitionNode(
+      name: _i1.NameNode(value: 'tasks'),
+      directives: [],
+      args: [],
+      type: _i1.ListTypeNode(
+        type: _i1.NamedTypeNode(
+          name: _i1.NameNode(value: 'TodoItem'),
+          isNonNull: true,
+        ),
+        isNonNull: true,
+      ),
+    )
+  ],
+);
 const Foo = _i1.EnumTypeDefinitionNode(
   name: _i1.NameNode(value: 'Foo'),
   directives: [],
@@ -71,8 +90,29 @@ const Query = _i1.ObjectTypeDefinitionNode(
     )
   ],
 );
+const Subscription = _i1.ObjectTypeDefinitionNode(
+  name: _i1.NameNode(value: 'Subscription'),
+  directives: [],
+  interfaces: [],
+  fields: [
+    _i1.FieldDefinitionNode(
+      name: _i1.NameNode(value: 'tasksUpdates'),
+      directives: [],
+      args: [],
+      type: _i1.ListTypeNode(
+        type: _i1.NamedTypeNode(
+          name: _i1.NameNode(value: 'TodoItem'),
+          isNonNull: true,
+        ),
+        isNonNull: true,
+      ),
+    )
+  ],
+);
 const document = _i1.DocumentNode(definitions: [
   TodoItem,
+  TasksUpdate,
   Foo,
   Query,
+  Subscription,
 ]);

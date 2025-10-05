@@ -1,65 +1,55 @@
+import asyncio
+from dataclasses import dataclass
 import datetime
+from enum import Enum, StrEnum
+import msgspec
 import strawberry
 from sqlalchemy.ext.asyncio import AsyncSession
-from typing import List
-import sqlalchemy
+from typing import AsyncGenerator, List, TypedDict
+from backend.task_service import TaskService
 from sqlalchemy import ScalarResult
-
-from backend.db import orm_to_dict
-
 
 from backend.db import TodoItemModel
 
-@strawberry.type
-class TodoItem:
-    id: int
-    text: str
-    completed: bool
-    created_at: datetime.datetime
+import redis.asyncio as redis
 
+from backend.task import TodoItem
 
 @strawberry.input
 class AddTaskInput:
     text: str
 
+class MyContext(TypedDict):
+    task_service: TaskService
+    
+type MyStrawberryInfo = strawberry.Info[MyContext]
+
 @strawberry.type
 class Query:
-    #tasks: typing.List[TodoItem] = strawberry.field(resolver=get_tasks)
     @strawberry.field
-    async def tasks(info: strawberry.Info) -> List[TodoItem]:
-        #, info: strawberry.Info[dict, None]
-        db_session: AsyncSession = info.context["db_session"]
-
-        tasks: List[TodoItem] = []
-        tasks_rows = sqlalchemy.select(TodoItemModel)
-
-        tasks_orm: ScalarResult = await db_session.scalars(tasks_rows)
-
-        for task in tasks_orm:
-            task_dict = orm_to_dict(task)
-            tasks.append(TodoItem(id=task_dict['id'],
-                text=task_dict['text'],
-                completed=task_dict['completed'],
-                created_at=task_dict['created_at']  )
-            )
-
-        #tasks = [TodoItem(text="1"), TodoItem(text="2")]
+    async def tasks(self, info: MyStrawberryInfo) -> List[TodoItem]:
+        task_service = info.context['task_service']
+        tasks = await task_service.get_all_tasks()
+        
         return tasks
-
+     
 @strawberry.type
 class Mutation:
-    #add_task: TodoItem = strawberry.mutation(resolver=add_task)
     @strawberry.mutation
-    #info: strawberry.Info[dict, None]
-    async def add_task(self, info: strawberry.Info, text: str) -> TodoItem:
-        db_session: AsyncSession = info.context["db_session"]
+    async def add_task(self, text: str, info: MyStrawberryInfo) -> TodoItem:
+        task_service = info.context['task_service']
 
-        new_item: TodoItemModel = TodoItemModel(text=text,
-            completed=False,
-            created_at=datetime.datetime.now())
+        new_item: TodoItem = await task_service.add_task(text)
 
-        db_session.add(new_item)
-        await db_session.commit()
-        await db_session.refresh(new_item)
-        #return TodoItem(id=1,text="123",completed=False,created_at=datetime.datetime.now())
-        return TodoItem(id=new_item.id, text=new_item.text, completed=new_item.completed, created_at=new_item.created_at)
+        return new_item
+
+@strawberry.type
+class Subscription:
+    @strawberry.subscription
+    async def tasks_updates(self, info: MyStrawberryInfo) -> AsyncGenerator[List[TodoItem], None]:
+        update_service = info.context['task_service'].update_service
+
+        async for update in update_service.todo_update_generator():
+            yield update
+        
+       

@@ -2,6 +2,7 @@
 // ignore_for_file: type=lint
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:frontend/__generated__/serializers.gql.dart' as _i2;
@@ -13,11 +14,11 @@ part 'tasksUpdateDetails.data.gql.g.dart';
 abstract class GtasksUpdateDetails {
   String get G__typename;
   String get type;
-  GtasksUpdateDetails_task get task;
+  BuiltList<GtasksUpdateDetails_tasks> get tasks;
   Map<String, dynamic> toJson();
 }
 
-abstract class GtasksUpdateDetails_task implements _i1.GTaskDetails {
+abstract class GtasksUpdateDetails_tasks implements _i1.GTaskDetails {
   @override
   String get G__typename;
   @override
@@ -49,7 +50,7 @@ abstract class GtasksUpdateDetailsData
   @override
   String get type;
   @override
-  GtasksUpdateDetailsData_task get task;
+  BuiltList<GtasksUpdateDetailsData_tasks> get tasks;
   static Serializer<GtasksUpdateDetailsData> get serializer =>
       _$gtasksUpdateDetailsDataSerializer;
 
@@ -66,19 +67,19 @@ abstract class GtasksUpdateDetailsData
       );
 }
 
-abstract class GtasksUpdateDetailsData_task
+abstract class GtasksUpdateDetailsData_tasks
     implements
-        Built<GtasksUpdateDetailsData_task,
-            GtasksUpdateDetailsData_taskBuilder>,
-        GtasksUpdateDetails_task,
+        Built<GtasksUpdateDetailsData_tasks,
+            GtasksUpdateDetailsData_tasksBuilder>,
+        GtasksUpdateDetails_tasks,
         _i1.GTaskDetails {
-  GtasksUpdateDetailsData_task._();
+  GtasksUpdateDetailsData_tasks._();
 
-  factory GtasksUpdateDetailsData_task(
-          [void Function(GtasksUpdateDetailsData_taskBuilder b) updates]) =
-      _$GtasksUpdateDetailsData_task;
+  factory GtasksUpdateDetailsData_tasks(
+          [void Function(GtasksUpdateDetailsData_tasksBuilder b) updates]) =
+      _$GtasksUpdateDetailsData_tasks;
 
-  static void _initializeBuilder(GtasksUpdateDetailsData_taskBuilder b) =>
+  static void _initializeBuilder(GtasksUpdateDetailsData_tasksBuilder b) =>
       b..G__typename = 'TodoItem';
 
   @override
@@ -90,18 +91,18 @@ abstract class GtasksUpdateDetailsData_task
   String get text;
   @override
   bool get completed;
-  static Serializer<GtasksUpdateDetailsData_task> get serializer =>
-      _$gtasksUpdateDetailsDataTaskSerializer;
+  static Serializer<GtasksUpdateDetailsData_tasks> get serializer =>
+      _$gtasksUpdateDetailsDataTasksSerializer;
 
   @override
   Map<String, dynamic> toJson() => (_i2.serializers.serializeWith(
-        GtasksUpdateDetailsData_task.serializer,
+        GtasksUpdateDetailsData_tasks.serializer,
         this,
       ) as Map<String, dynamic>);
 
-  static GtasksUpdateDetailsData_task? fromJson(Map<String, dynamic> json) =>
+  static GtasksUpdateDetailsData_tasks? fromJson(Map<String, dynamic> json) =>
       _i2.serializers.deserializeWith(
-        GtasksUpdateDetailsData_task.serializer,
+        GtasksUpdateDetailsData_tasks.serializer,
         json,
       );
 }

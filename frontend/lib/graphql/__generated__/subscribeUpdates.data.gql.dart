@@ -2,6 +2,7 @@
 // ignore_for_file: type=lint
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:frontend/__generated__/serializers.gql.dart' as _i1;
@@ -63,7 +64,7 @@ abstract class GsubscribeTasksUpdatesData_tasksUpdates
   @override
   String get type;
   @override
-  GsubscribeTasksUpdatesData_tasksUpdates_task get task;
+  BuiltList<GsubscribeTasksUpdatesData_tasksUpdates_tasks> get tasks;
   static Serializer<GsubscribeTasksUpdatesData_tasksUpdates> get serializer =>
       _$gsubscribeTasksUpdatesDataTasksUpdatesSerializer;
 
@@ -81,20 +82,20 @@ abstract class GsubscribeTasksUpdatesData_tasksUpdates
       );
 }
 
-abstract class GsubscribeTasksUpdatesData_tasksUpdates_task
+abstract class GsubscribeTasksUpdatesData_tasksUpdates_tasks
     implements
-        Built<GsubscribeTasksUpdatesData_tasksUpdates_task,
-            GsubscribeTasksUpdatesData_tasksUpdates_taskBuilder>,
-        _i2.GtasksUpdateDetails_task,
+        Built<GsubscribeTasksUpdatesData_tasksUpdates_tasks,
+            GsubscribeTasksUpdatesData_tasksUpdates_tasksBuilder>,
+        _i2.GtasksUpdateDetails_tasks,
         _i3.GTaskDetails {
-  GsubscribeTasksUpdatesData_tasksUpdates_task._();
+  GsubscribeTasksUpdatesData_tasksUpdates_tasks._();
 
-  factory GsubscribeTasksUpdatesData_tasksUpdates_task(
-      [void Function(GsubscribeTasksUpdatesData_tasksUpdates_taskBuilder b)
-          updates]) = _$GsubscribeTasksUpdatesData_tasksUpdates_task;
+  factory GsubscribeTasksUpdatesData_tasksUpdates_tasks(
+      [void Function(GsubscribeTasksUpdatesData_tasksUpdates_tasksBuilder b)
+          updates]) = _$GsubscribeTasksUpdatesData_tasksUpdates_tasks;
 
   static void _initializeBuilder(
-          GsubscribeTasksUpdatesData_tasksUpdates_taskBuilder b) =>
+          GsubscribeTasksUpdatesData_tasksUpdates_tasksBuilder b) =>
       b..G__typename = 'TodoItem';
 
   @override
@@ -106,19 +107,19 @@ abstract class GsubscribeTasksUpdatesData_tasksUpdates_task
   String get text;
   @override
   bool get completed;
-  static Serializer<GsubscribeTasksUpdatesData_tasksUpdates_task>
-      get serializer => _$gsubscribeTasksUpdatesDataTasksUpdatesTaskSerializer;
+  static Serializer<GsubscribeTasksUpdatesData_tasksUpdates_tasks>
+      get serializer => _$gsubscribeTasksUpdatesDataTasksUpdatesTasksSerializer;
 
   @override
   Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
-        GsubscribeTasksUpdatesData_tasksUpdates_task.serializer,
+        GsubscribeTasksUpdatesData_tasksUpdates_tasks.serializer,
         this,
       ) as Map<String, dynamic>);
 
-  static GsubscribeTasksUpdatesData_tasksUpdates_task? fromJson(
+  static GsubscribeTasksUpdatesData_tasksUpdates_tasks? fromJson(
           Map<String, dynamic> json) =>
       _i1.serializers.deserializeWith(
-        GsubscribeTasksUpdatesData_tasksUpdates_task.serializer,
+        GsubscribeTasksUpdatesData_tasksUpdates_tasks.serializer,
         json,
       );
 }

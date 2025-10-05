@@ -8,12 +8,8 @@ import 'package:frontend/todo_list_page.dart';
 import 'package:get_it/get_it.dart';
 
 void main() async {
-  final subscription = await initTasksUpdatesStream();
 
-  GetIt.I.registerSingleton<StreamSubscription>(subscription);
 
-  print("hello");
-  print(GetIt.I<StreamSubscription>());
   runApp(ProviderScope(child: MyApp()));
 }
 

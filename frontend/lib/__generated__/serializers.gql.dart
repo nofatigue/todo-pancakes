@@ -16,7 +16,7 @@ import 'package:frontend/graphql/__generated__/subscribeUpdates.data.gql.dart'
     show
         GsubscribeTasksUpdatesData,
         GsubscribeTasksUpdatesData_tasksUpdates,
-        GsubscribeTasksUpdatesData_tasksUpdates_task;
+        GsubscribeTasksUpdatesData_tasksUpdates_tasks;
 import 'package:frontend/graphql/__generated__/subscribeUpdates.req.gql.dart'
     show GsubscribeTasksUpdatesReq;
 import 'package:frontend/graphql/__generated__/subscribeUpdates.var.gql.dart'
@@ -28,7 +28,7 @@ import 'package:frontend/graphql/__generated__/taskDetails.req.gql.dart'
 import 'package:frontend/graphql/__generated__/taskDetails.var.gql.dart'
     show GTaskDetailsVars;
 import 'package:frontend/graphql/__generated__/tasksUpdateDetails.data.gql.dart'
-    show GtasksUpdateDetailsData, GtasksUpdateDetailsData_task;
+    show GtasksUpdateDetailsData, GtasksUpdateDetailsData_tasks;
 import 'package:frontend/graphql/__generated__/tasksUpdateDetails.req.gql.dart'
     show GtasksUpdateDetailsReq;
 import 'package:frontend/graphql/__generated__/tasksUpdateDetails.var.gql.dart'
@@ -52,11 +52,11 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GgetTasksVars,
   GsubscribeTasksUpdatesData,
   GsubscribeTasksUpdatesData_tasksUpdates,
-  GsubscribeTasksUpdatesData_tasksUpdates_task,
+  GsubscribeTasksUpdatesData_tasksUpdates_tasks,
   GsubscribeTasksUpdatesReq,
   GsubscribeTasksUpdatesVars,
   GtasksUpdateDetailsData,
-  GtasksUpdateDetailsData_task,
+  GtasksUpdateDetailsData_tasks,
   GtasksUpdateDetailsReq,
   GtasksUpdateDetailsVars,
 ])

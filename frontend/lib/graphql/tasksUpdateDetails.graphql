@@ -2,7 +2,7 @@
 
 fragment tasksUpdateDetails on TasksUpdate {
   type
-  task {
+  tasks {
     ...TaskDetails
   }
 }

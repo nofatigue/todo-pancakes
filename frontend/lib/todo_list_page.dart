@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/backend.dart';
 import 'package:frontend/client.dart';
 import 'package:frontend/graphql/__generated__/taskDetails.data.gql.dart';
-import 'package:get_it/get_it.dart';
 
 class TodoItemCard extends StatelessWidget {
   const TodoItemCard({super.key, required this.task});
@@ -32,14 +31,11 @@ class TodoItemCard extends StatelessWidget {
 }
 
 class TodoListPage extends ConsumerWidget {
-  final client = graphClient;
-  final updatesSub = GetIt.I<StreamSubscription>();
-
   TodoListPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final futureTaskList = ref.watch(tasksListNotifierProvider);
+    final futureTaskList = ref.watch(tasksUpdatesProvider);
 
     return Scaffold(
       appBar: AppBar(title: const Text('All Tasks')),
@@ -62,9 +58,16 @@ class TodoListPage extends ConsumerWidget {
               ElevatedButton(
                 onPressed: () {
                   print("click");
-                  ref.invalidate(tasksQueryProvider);
+                  //ref.invalidate(tasksQueryProvider);
                 },
-                child: Text('Refresh'),
+                child: Text('Nothing'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  print("Subscribe");
+                  ref.invalidate(tasksUpdatesProvider);
+                },
+                child: Text('Subscribe'),
               ),
             ],
           ),

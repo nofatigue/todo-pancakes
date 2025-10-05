@@ -1,6 +1,7 @@
 import asyncio
 from enum import StrEnum
 import logging
+from typing import List
 import msgspec
 import redis.asyncio as redis
 import strawberry
@@ -8,22 +9,23 @@ import strawberry
 from backend.config import REDIS_HOST, REDIS_PORT
 from backend.task import TodoItem
 
-TaskUpdatesChannelName = "todo_updates"
+TasksUpdatesChannelName = "todo_updates"
 
 async def get_redis_client() -> redis.Redis:
     return await redis.Redis(host=REDIS_HOST, port=REDIS_PORT)
 
 
 @strawberry.enum
-class TaskUpdateType(StrEnum):
+class TasksUpdateType(StrEnum):
     ADD = 'add'
     MODIFY = 'modify'
     DELETE = 'delete'
+    INIT = 'init'
 
 @strawberry.type
-class TaskUpdate():
-    type: TaskUpdateType
-    task: TodoItem
+class TasksUpdate():
+    type: TasksUpdateType
+    tasks: List[TodoItem]
 
 class UpdateService():
     def __init__(self, redis_client):
@@ -31,16 +33,15 @@ class UpdateService():
 
     redis_client: redis.Redis
 
-    async def add_task_update(self, new_task: TodoItem):
-        # publish update to redis
-        task_update: TaskUpdate = TaskUpdate(type = TaskUpdateType.ADD, task = new_task)
-        await self.redis_client.publish(TaskUpdatesChannelName, msgspec.json.encode(task_update))
+    async def tasks_update_type_init(self, init_list: list[TodoItem]):
+        task_update: TasksUpdate = TasksUpdate(type = TasksUpdateType.INIT, tasks = init_list)
+        await self.redis_client.publish(TasksUpdatesChannelName, msgspec.json.encode(task_update))
 
     async def todo_update_generator(self):
 
         async with self.redis_client.pubsub() as pubsub:
         
-            await pubsub.subscribe(TaskUpdatesChannelName)
+            await pubsub.subscribe(TasksUpdatesChannelName)
 
             while True:
                 await asyncio.sleep(0.1)
@@ -59,7 +60,7 @@ class UpdateService():
                     continue
 
                 try:
-                    task_update: TaskUpdate = msgspec.json.decode(msg['data'], type=TaskUpdate)
+                    task_update: TasksUpdate = msgspec.json.decode(msg['data'], type=TasksUpdate)
                 except msgspec.MsgspecError as e:
                     logging.error(f"Msgspec Error: {e}")
                     continue

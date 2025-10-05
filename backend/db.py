@@ -80,8 +80,13 @@ class TaskRepositoryService():
         
         new_item_obj: TodoItem = TodoItem(id=new_item_model.id, text=new_item_model.text, completed=new_item_model.completed, created_at=new_item_model.created_at)
 
-        await self.update_service.add_task_update(new_task=new_item_obj)
+        await self.send_updates_for_subscribers()
 
         return new_item_obj
+
+    async def send_updates_for_subscribers(self):
+        tasks = await self.get_all_tasks()
+
+        await self.update_service.tasks_update_type_init(init_list=tasks)
 
         

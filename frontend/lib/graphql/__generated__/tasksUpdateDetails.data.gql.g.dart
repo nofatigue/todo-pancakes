@@ -8,9 +8,9 @@ part of 'tasksUpdateDetails.data.gql.dart';
 
 Serializer<GtasksUpdateDetailsData> _$gtasksUpdateDetailsDataSerializer =
     _$GtasksUpdateDetailsDataSerializer();
-Serializer<GtasksUpdateDetailsData_task>
-    _$gtasksUpdateDetailsDataTaskSerializer =
-    _$GtasksUpdateDetailsData_taskSerializer();
+Serializer<GtasksUpdateDetailsData_tasks>
+    _$gtasksUpdateDetailsDataTasksSerializer =
+    _$GtasksUpdateDetailsData_tasksSerializer();
 
 class _$GtasksUpdateDetailsDataSerializer
     implements StructuredSerializer<GtasksUpdateDetailsData> {
@@ -32,9 +32,10 @@ class _$GtasksUpdateDetailsDataSerializer
           specifiedType: const FullType(String)),
       'type',
       serializers.serialize(object.type, specifiedType: const FullType(String)),
-      'task',
-      serializers.serialize(object.task,
-          specifiedType: const FullType(GtasksUpdateDetailsData_task)),
+      'tasks',
+      serializers.serialize(object.tasks,
+          specifiedType: const FullType(BuiltList,
+              const [const FullType(GtasksUpdateDetailsData_tasks)])),
     ];
 
     return result;
@@ -60,10 +61,11 @@ class _$GtasksUpdateDetailsDataSerializer
           result.type = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
-        case 'task':
-          result.task.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(GtasksUpdateDetailsData_task))!
-              as GtasksUpdateDetailsData_task);
+        case 'tasks':
+          result.tasks.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(GtasksUpdateDetailsData_tasks)
+              ]))! as BuiltList<Object?>);
           break;
       }
     }
@@ -72,19 +74,19 @@ class _$GtasksUpdateDetailsDataSerializer
   }
 }
 
-class _$GtasksUpdateDetailsData_taskSerializer
-    implements StructuredSerializer<GtasksUpdateDetailsData_task> {
+class _$GtasksUpdateDetailsData_tasksSerializer
+    implements StructuredSerializer<GtasksUpdateDetailsData_tasks> {
   @override
   final Iterable<Type> types = const [
-    GtasksUpdateDetailsData_task,
-    _$GtasksUpdateDetailsData_task
+    GtasksUpdateDetailsData_tasks,
+    _$GtasksUpdateDetailsData_tasks
   ];
   @override
-  final String wireName = 'GtasksUpdateDetailsData_task';
+  final String wireName = 'GtasksUpdateDetailsData_tasks';
 
   @override
   Iterable<Object?> serialize(
-      Serializers serializers, GtasksUpdateDetailsData_task object,
+      Serializers serializers, GtasksUpdateDetailsData_tasks object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[
       '__typename',
@@ -103,10 +105,10 @@ class _$GtasksUpdateDetailsData_taskSerializer
   }
 
   @override
-  GtasksUpdateDetailsData_task deserialize(
+  GtasksUpdateDetailsData_tasks deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = GtasksUpdateDetailsData_taskBuilder();
+    final result = GtasksUpdateDetailsData_tasksBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -143,14 +145,14 @@ class _$GtasksUpdateDetailsData extends GtasksUpdateDetailsData {
   @override
   final String type;
   @override
-  final GtasksUpdateDetailsData_task task;
+  final BuiltList<GtasksUpdateDetailsData_tasks> tasks;
 
   factory _$GtasksUpdateDetailsData(
           [void Function(GtasksUpdateDetailsDataBuilder)? updates]) =>
       (GtasksUpdateDetailsDataBuilder()..update(updates))._build();
 
   _$GtasksUpdateDetailsData._(
-      {required this.G__typename, required this.type, required this.task})
+      {required this.G__typename, required this.type, required this.tasks})
       : super._();
   @override
   GtasksUpdateDetailsData rebuild(
@@ -167,7 +169,7 @@ class _$GtasksUpdateDetailsData extends GtasksUpdateDetailsData {
     return other is GtasksUpdateDetailsData &&
         G__typename == other.G__typename &&
         type == other.type &&
-        task == other.task;
+        tasks == other.tasks;
   }
 
   @override
@@ -175,7 +177,7 @@ class _$GtasksUpdateDetailsData extends GtasksUpdateDetailsData {
     var _$hash = 0;
     _$hash = $jc(_$hash, G__typename.hashCode);
     _$hash = $jc(_$hash, type.hashCode);
-    _$hash = $jc(_$hash, task.hashCode);
+    _$hash = $jc(_$hash, tasks.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -185,7 +187,7 @@ class _$GtasksUpdateDetailsData extends GtasksUpdateDetailsData {
     return (newBuiltValueToStringHelper(r'GtasksUpdateDetailsData')
           ..add('G__typename', G__typename)
           ..add('type', type)
-          ..add('task', task))
+          ..add('tasks', tasks))
         .toString();
   }
 }
@@ -203,10 +205,11 @@ class GtasksUpdateDetailsDataBuilder
   String? get type => _$this._type;
   set type(String? type) => _$this._type = type;
 
-  GtasksUpdateDetailsData_taskBuilder? _task;
-  GtasksUpdateDetailsData_taskBuilder get task =>
-      _$this._task ??= GtasksUpdateDetailsData_taskBuilder();
-  set task(GtasksUpdateDetailsData_taskBuilder? task) => _$this._task = task;
+  ListBuilder<GtasksUpdateDetailsData_tasks>? _tasks;
+  ListBuilder<GtasksUpdateDetailsData_tasks> get tasks =>
+      _$this._tasks ??= ListBuilder<GtasksUpdateDetailsData_tasks>();
+  set tasks(ListBuilder<GtasksUpdateDetailsData_tasks>? tasks) =>
+      _$this._tasks = tasks;
 
   GtasksUpdateDetailsDataBuilder() {
     GtasksUpdateDetailsData._initializeBuilder(this);
@@ -217,7 +220,7 @@ class GtasksUpdateDetailsDataBuilder
     if ($v != null) {
       _G__typename = $v.G__typename;
       _type = $v.type;
-      _task = $v.task.toBuilder();
+      _tasks = $v.tasks.toBuilder();
       _$v = null;
     }
     return this;
@@ -245,13 +248,13 @@ class GtasksUpdateDetailsDataBuilder
                 G__typename, r'GtasksUpdateDetailsData', 'G__typename'),
             type: BuiltValueNullFieldError.checkNotNull(
                 type, r'GtasksUpdateDetailsData', 'type'),
-            task: task.build(),
+            tasks: tasks.build(),
           );
     } catch (_) {
       late String _$failedField;
       try {
-        _$failedField = 'task';
-        task.build();
+        _$failedField = 'tasks';
+        tasks.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
             r'GtasksUpdateDetailsData', _$failedField, e.toString());
@@ -263,7 +266,7 @@ class GtasksUpdateDetailsDataBuilder
   }
 }
 
-class _$GtasksUpdateDetailsData_task extends GtasksUpdateDetailsData_task {
+class _$GtasksUpdateDetailsData_tasks extends GtasksUpdateDetailsData_tasks {
   @override
   final String G__typename;
   @override
@@ -273,29 +276,29 @@ class _$GtasksUpdateDetailsData_task extends GtasksUpdateDetailsData_task {
   @override
   final bool completed;
 
-  factory _$GtasksUpdateDetailsData_task(
-          [void Function(GtasksUpdateDetailsData_taskBuilder)? updates]) =>
-      (GtasksUpdateDetailsData_taskBuilder()..update(updates))._build();
+  factory _$GtasksUpdateDetailsData_tasks(
+          [void Function(GtasksUpdateDetailsData_tasksBuilder)? updates]) =>
+      (GtasksUpdateDetailsData_tasksBuilder()..update(updates))._build();
 
-  _$GtasksUpdateDetailsData_task._(
+  _$GtasksUpdateDetailsData_tasks._(
       {required this.G__typename,
       required this.id,
       required this.text,
       required this.completed})
       : super._();
   @override
-  GtasksUpdateDetailsData_task rebuild(
-          void Function(GtasksUpdateDetailsData_taskBuilder) updates) =>
+  GtasksUpdateDetailsData_tasks rebuild(
+          void Function(GtasksUpdateDetailsData_tasksBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  GtasksUpdateDetailsData_taskBuilder toBuilder() =>
-      GtasksUpdateDetailsData_taskBuilder()..replace(this);
+  GtasksUpdateDetailsData_tasksBuilder toBuilder() =>
+      GtasksUpdateDetailsData_tasksBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is GtasksUpdateDetailsData_task &&
+    return other is GtasksUpdateDetailsData_tasks &&
         G__typename == other.G__typename &&
         id == other.id &&
         text == other.text &&
@@ -315,7 +318,7 @@ class _$GtasksUpdateDetailsData_task extends GtasksUpdateDetailsData_task {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'GtasksUpdateDetailsData_task')
+    return (newBuiltValueToStringHelper(r'GtasksUpdateDetailsData_tasks')
           ..add('G__typename', G__typename)
           ..add('id', id)
           ..add('text', text)
@@ -324,11 +327,11 @@ class _$GtasksUpdateDetailsData_task extends GtasksUpdateDetailsData_task {
   }
 }
 
-class GtasksUpdateDetailsData_taskBuilder
+class GtasksUpdateDetailsData_tasksBuilder
     implements
-        Builder<GtasksUpdateDetailsData_task,
-            GtasksUpdateDetailsData_taskBuilder> {
-  _$GtasksUpdateDetailsData_task? _$v;
+        Builder<GtasksUpdateDetailsData_tasks,
+            GtasksUpdateDetailsData_tasksBuilder> {
+  _$GtasksUpdateDetailsData_tasks? _$v;
 
   String? _G__typename;
   String? get G__typename => _$this._G__typename;
@@ -346,11 +349,11 @@ class GtasksUpdateDetailsData_taskBuilder
   bool? get completed => _$this._completed;
   set completed(bool? completed) => _$this._completed = completed;
 
-  GtasksUpdateDetailsData_taskBuilder() {
-    GtasksUpdateDetailsData_task._initializeBuilder(this);
+  GtasksUpdateDetailsData_tasksBuilder() {
+    GtasksUpdateDetailsData_tasks._initializeBuilder(this);
   }
 
-  GtasksUpdateDetailsData_taskBuilder get _$this {
+  GtasksUpdateDetailsData_tasksBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _G__typename = $v.G__typename;
@@ -363,29 +366,29 @@ class GtasksUpdateDetailsData_taskBuilder
   }
 
   @override
-  void replace(GtasksUpdateDetailsData_task other) {
-    _$v = other as _$GtasksUpdateDetailsData_task;
+  void replace(GtasksUpdateDetailsData_tasks other) {
+    _$v = other as _$GtasksUpdateDetailsData_tasks;
   }
 
   @override
-  void update(void Function(GtasksUpdateDetailsData_taskBuilder)? updates) {
+  void update(void Function(GtasksUpdateDetailsData_tasksBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  GtasksUpdateDetailsData_task build() => _build();
+  GtasksUpdateDetailsData_tasks build() => _build();
 
-  _$GtasksUpdateDetailsData_task _build() {
+  _$GtasksUpdateDetailsData_tasks _build() {
     final _$result = _$v ??
-        _$GtasksUpdateDetailsData_task._(
+        _$GtasksUpdateDetailsData_tasks._(
           G__typename: BuiltValueNullFieldError.checkNotNull(
-              G__typename, r'GtasksUpdateDetailsData_task', 'G__typename'),
+              G__typename, r'GtasksUpdateDetailsData_tasks', 'G__typename'),
           id: BuiltValueNullFieldError.checkNotNull(
-              id, r'GtasksUpdateDetailsData_task', 'id'),
+              id, r'GtasksUpdateDetailsData_tasks', 'id'),
           text: BuiltValueNullFieldError.checkNotNull(
-              text, r'GtasksUpdateDetailsData_task', 'text'),
+              text, r'GtasksUpdateDetailsData_tasks', 'text'),
           completed: BuiltValueNullFieldError.checkNotNull(
-              completed, r'GtasksUpdateDetailsData_task', 'completed'),
+              completed, r'GtasksUpdateDetailsData_tasks', 'completed'),
         );
     replace(_$result);
     return _$result;

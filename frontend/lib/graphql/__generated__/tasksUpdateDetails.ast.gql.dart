@@ -22,7 +22,7 @@ const tasksUpdateDetails = _i1.FragmentDefinitionNode(
       selectionSet: null,
     ),
     _i1.FieldNode(
-      name: _i1.NameNode(value: 'task'),
+      name: _i1.NameNode(value: 'tasks'),
       alias: null,
       arguments: [],
       directives: [],

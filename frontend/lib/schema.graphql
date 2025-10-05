@@ -6,7 +6,7 @@ type TodoItem {
 
 type TasksUpdate {
     type: String!
-    task: TodoItem!
+    tasks: [TodoItem!]!
 }
 
 enum Foo{

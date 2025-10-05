@@ -5,16 +5,19 @@ import 'package:gql_websocket_link/gql_websocket_link.dart';
 
 const graphQLURI = "localhost:8000/graphql";
 
-final httpLink = HttpLink("http://$graphQLURI");
 
-final wsLink = TransportWebSocketLink(
-  TransportWsClientOptions(
-    socketMaker: WebSocketMaker.url(() => "ws://$graphQLURI"),
+// this stupid empty parameter is needed!!!!
+final connectionParamsMap = <String, Object>{};
+
+final seperateWsLink = Link.from([
+  TransportWebSocketLink(
+    TransportWsClientOptions(
+      socketMaker: WebSocketMaker.url(() => "ws://$graphQLURI"),
+      connectionParams: () => connectionParamsMap,
+    ),
   ),
-);
+]);
 
-final link = Link.from([httpLink, wsLink]);
+final wsCache = Cache(possibleTypes: possibleTypesMap);
+final subsGraphClient = Client(link: seperateWsLink, cache: wsCache);
 
-final cache = Cache(possibleTypes: possibleTypesMap);
-
-final graphClient = Client(link: link, cache: cache);

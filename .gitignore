@@ -1,3 +1,5 @@
 **/__pycache__/
 *.py[cod]
 frontend/devtools_options.yaml
+.vscode/settings.json
+pyrightconfig.json

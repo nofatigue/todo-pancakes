@@ -18,17 +18,26 @@ Serializers _$serializers = (Serializers().toBuilder()
       ..add(GgetTasksVars.serializer)
       ..add(GsubscribeTasksUpdatesData.serializer)
       ..add(GsubscribeTasksUpdatesData_tasksUpdates.serializer)
-      ..add(GsubscribeTasksUpdatesData_tasksUpdates_task.serializer)
+      ..add(GsubscribeTasksUpdatesData_tasksUpdates_tasks.serializer)
       ..add(GsubscribeTasksUpdatesReq.serializer)
       ..add(GsubscribeTasksUpdatesVars.serializer)
       ..add(GtasksUpdateDetailsData.serializer)
-      ..add(GtasksUpdateDetailsData_task.serializer)
+      ..add(GtasksUpdateDetailsData_tasks.serializer)
       ..add(GtasksUpdateDetailsReq.serializer)
       ..add(GtasksUpdateDetailsVars.serializer)
       ..addBuilderFactory(
           const FullType(
               BuiltList, const [const FullType(GgetTasksData_tasks)]),
-          () => ListBuilder<GgetTasksData_tasks>()))
+          () => ListBuilder<GgetTasksData_tasks>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [
+            const FullType(GsubscribeTasksUpdatesData_tasksUpdates_tasks)
+          ]),
+          () => ListBuilder<GsubscribeTasksUpdatesData_tasksUpdates_tasks>())
+      ..addBuilderFactory(
+          const FullType(
+              BuiltList, const [const FullType(GtasksUpdateDetailsData_tasks)]),
+          () => ListBuilder<GtasksUpdateDetailsData_tasks>()))
     .build();
 
 // ignore_for_file: deprecated_member_use_from_same_package,type=lint

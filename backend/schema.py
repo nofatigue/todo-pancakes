@@ -6,7 +6,7 @@ import msgspec
 import strawberry
 from sqlalchemy.ext.asyncio import AsyncSession
 from typing import AsyncGenerator, List, TypedDict
-from backend.db import TaskRepositoryService
+from backend.task_service import TaskService
 from sqlalchemy import ScalarResult
 
 from backend.db import TodoItemModel
@@ -21,7 +21,7 @@ class AddTaskInput:
     text: str
 
 class MyContext(TypedDict):
-    db_service: TaskRepositoryService
+    task_service: TaskService
     
 type MyStrawberryInfo = strawberry.Info[MyContext]
 
@@ -29,8 +29,8 @@ type MyStrawberryInfo = strawberry.Info[MyContext]
 class Query:
     @strawberry.field
     async def tasks(self, info: MyStrawberryInfo) -> List[TodoItem]:
-        db_service = info.context['db_service']
-        tasks = await db_service.get_all_tasks()
+        task_service = info.context['task_service']
+        tasks = await task_service.get_all_tasks()
         
         return tasks
      
@@ -38,9 +38,9 @@ class Query:
 class Mutation:
     @strawberry.mutation
     async def add_task(self, text: str, info: MyStrawberryInfo) -> TodoItem:
-        db_service = info.context['db_service']
+        task_service = info.context['task_service']
 
-        new_item: TodoItem = await db_service.add_task(text)
+        new_item: TodoItem = await task_service.add_task(text)
 
         return new_item
 
@@ -48,13 +48,10 @@ class Mutation:
 class Subscription:
     @strawberry.subscription
     async def tasks_updates(self, info: MyStrawberryInfo) -> AsyncGenerator[TasksUpdate, None]:
-        update_service = info.context['db_service'].update_service
-
-        db_service = info.context['db_service']
-        tasks = await db_service.get_all_tasks()
+        update_service = info.context['task_service'].update_service
 
         # immediately generate a TasksUpdate for initial list
-        yield TasksUpdate(type=TasksUpdateType.INIT, tasks=tasks)
+        yield TasksUpdate(type=TasksUpdateType.INIT, tasks=[])
 
         async for update in update_service.todo_update_generator():
             yield update

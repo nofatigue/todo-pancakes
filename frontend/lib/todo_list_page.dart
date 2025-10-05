@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/backend.dart';
-import 'package:frontend/graphql/__generated__/taskDetails.data.gql.dart';
 
 class TodoListPage extends ConsumerWidget {
   const TodoListPage({super.key});
@@ -35,7 +34,7 @@ class TodoListPage extends ConsumerWidget {
 class TodoItemCard extends StatelessWidget {
   const TodoItemCard({super.key, required this.task});
 
-  final GTaskDetails task;
+  final TodoItem task;
 
   @override
   Widget build(BuildContext context) {
